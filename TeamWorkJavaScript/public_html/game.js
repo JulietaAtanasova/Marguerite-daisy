@@ -1,37 +1,30 @@
 ﻿var canvas, ctx;
 var player;
-var plX, plY;
 
 function handler(event) {
-    console.log(event);
-    plX = player.x;
-    plY = player.y;
+    var currentPos = {
+        x: player.x,
+        y: player.y
+    };
     if (event.keyCode == 39) { //right
+        player.move(10, 0);
         canvas.width = canvas.width;
-        player.x += 10;
-        ctx.drawImage(player.img, plX, plY);
-        //console.log(player);
+        ctx.drawImage(player.img, currentPos.x, currentPos.y);
     }
     else if (event.keyCode == 37) { //left
-        //console.log(player);
+        player.move(-10, 0);
         canvas.width = canvas.width;
-        player.x -= 10;
-        ctx.drawImage(player.img, plX, plY);
+        ctx.drawImage(player.img, currentPos.x, currentPos.y);
     }
-    else if(event.keyCode == 40){
+    else if (event.keyCode == 40) { // down
+        player.move(0, 10);
         canvas.width = canvas.width;
-        player.y += 10;
-        ctx.drawImage(player.img, plX, plY);
+        ctx.drawImage(player.img, currentPos.x, currentPos.y);
     }
-    else if (event.keyCode == 38) {
+    else if (event.keyCode == 38) { // up
+        player.move(0, -10);
         canvas.width = canvas.width;
-        player.y -= 10;
-        ctx.drawImage(player.img, plX, plY);
-    }
-
-    if(player.x > 500){
-        ctx.rect(50, 50, 100, 250);
-        ctx.fill();
+        ctx.drawImage(player.img, currentPos.x, currentPos.y);
     }
 }
 
@@ -41,12 +34,34 @@ function Player(img, x, y) {
     self.img.src = img.src;
     self.x = x;
     self.y = y;
+    self.move = function (x, y) {
+        if(self.x < 10){
+            self.x = 10;
+            return;
+        }
+        else if(self.x > canvas.width - 65){
+            self.x = canvas.width - 65;
+            return;
+        }
+        else if(self.y < 10){
+            self.y = 10;
+            return;
+        }
+        else if(self.y > canvas.height - 100){
+            self.y = canvas.height - 100;
+            return;
+        }
+        else {
+            player.x += x;
+            player.y += y;
+        }
+    }
 }
 
 function startGame() {
     canvas = document.getElementById('game');
     ctx = canvas.getContext('2d');
-    document.addEventListener('keydown', handler, false);
-    player = new Player({ src: "./IMG/hero.gif" }, 350, 250);
+    player = new Player({ src: "hero.gif" }, 350, 250);
     ctx.drawImage(player.img, player.x, player.y);
+    document.addEventListener('keydown', handler, false);
 }
