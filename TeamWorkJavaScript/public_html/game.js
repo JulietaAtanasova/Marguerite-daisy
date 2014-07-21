@@ -47,6 +47,6 @@ function startGame() {
     canvas = document.getElementById('game');
     ctx = canvas.getContext('2d');
     document.addEventListener('keydown', handler, false);
-    player = new Player({ src: "hero.gif" }, 350, 250);
+    player = new Player({ src: "./IMG/hero.gif" }, 350, 250);
     ctx.drawImage(player.img, player.x, player.y);
 }
