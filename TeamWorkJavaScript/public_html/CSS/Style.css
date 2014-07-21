@@ -1,0 +1,7 @@
+body{
+    text-align: center;
+}
+#game{
+    margin-top: 15px;
+    background-image: url('../IMG/background.png');   
+}
