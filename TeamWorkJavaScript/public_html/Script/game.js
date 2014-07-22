@@ -116,7 +116,7 @@ function init() {
 
 function startGame() {
     init();
-    player = new Player({ src: "./IMG/hero.png" }, 480, 480);
+    player = new Player({ src: "./IMG/pesho.png" }, 480, 480);
     ctx.drawImage(player.img, player.x, player.y);
     level = 1;
     document.addEventListener('keydown', handler, false);
