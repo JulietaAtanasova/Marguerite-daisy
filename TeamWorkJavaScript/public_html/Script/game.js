@@ -14,6 +14,10 @@ function handler(event) {
     else if (event.keyCode == 38) { // up
         player.move(0, -60);
     }
+    canvasRedraw();
+}
+
+function canvasRedraw() {
     canvas.width = canvas.width;
     ctx.drawImage(player.img, player.x, player.y);
 }
@@ -51,9 +55,13 @@ function Player(img, x, y) {
     }
 }
 
-function startGame() {
+function init() {
     canvas = document.getElementById('game');
     ctx = canvas.getContext('2d');
+}
+
+function startGame() {
+    init();
     player = new Player({ src: "./IMG/hero.png" }, 40, 60);
     ctx.drawImage(player.img, player.x, player.y);
     document.addEventListener('keydown', handler, false);
