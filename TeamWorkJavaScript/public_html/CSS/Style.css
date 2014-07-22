@@ -1,7 +1,9 @@
-body{
+body {
     text-align: center;
 }
-#game{
+
+#game {
     margin-top: 15px;
-    background-image: url('../IMG/Backround_with_light.png');   
+    /*background-image: url('../IMG/Backround_with_light.png'); */
+    background-image: url('../IMG/bg.png');
 }
