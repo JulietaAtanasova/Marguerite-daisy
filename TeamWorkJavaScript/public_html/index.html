@@ -11,21 +11,23 @@
     <script src="Script/jquery.fittext.js"></script>
 </head>
 <body>
-    <div id="info" style="display: none;"><p id="text" data-in-effect="bounce" data-in-sequence="true">Идеята ми е тук да се сложи някакъв текст като мини история за Пешо и неговия път към СофтУни... Здравейте, аз съм Пешо... Чух че името ми е известно в СофтУни и затова ще кандидатствам обаче трябва да натрупам знания по C#... нещо такова... не съм много добър в писането на истории </p>
-    </div>
-    <div id="menu"></div>
-   <canvas id="game" width="1000" height="600"></canvas>
-    <script>
-        $(function () {
-            $.get('menu.html', function (data) {
-                $('#menu').append(data);
+    <div id="wrapper">
+        <div id="info" style="display: none;"><p id="text" data-in-effect="bounce" data-in-sequence="true">Идеята ми е тук да се сложи някакъв текст като мини история за Пешо и неговия път към СофтУни... Здравейте, аз съм Пешо... Чух че името ми е известно в СофтУни и затова ще кандидатствам обаче трябва да натрупам знания по C#... нещо такова... не съм много добър в писането на истории </p>
+        </div>
+        <div id="menu"></div>
+       <canvas id="game" width="1000" height="600"></canvas>
+        <script>
+            $(function () {
+                $.get('menu.html', function (data) {
+                    $('#menu').append(data);
+                });
             });
-        });
-        $('#game').hide();
-        $(function () {
-            //uncomment to animate text
-           // $('#text').textillate();
-        });
-    </script>
+            $('#game').hide();
+            $(function () {
+                //uncomment to animate text
+               // $('#text').textillate();
+            });
+        </script>
+    </div>
 </body>
 </html>

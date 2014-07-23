@@ -1,7 +1,12 @@
 body {
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
-
+#wrapper{
+    margin: 0 auto;
+    width: 80%;
+}
 #info{
     width: 250px;
     height: 500px;
@@ -16,19 +21,30 @@ body {
     }
     #menu {
         text-align: center;
+        background-color: grey;
+        margin: 0px auto;
+        padding-top: 50px;
+        width: 1000px;
+        height: 550px;
     }
 
-    button {
+    #start, #story, #controls, #about {
         font-family: 'Indie Flower', 'Comic Sans MS', Arial;
         display: block;
-        margin-top: 15px;
-        width: 500px;
-        height: 75px;
+        padding: 15px;
+        width: 300px;
         border: 0;
         background: rgb(35, 68, 101);
         font-size: 2.2em;
         color: rgb(255, 156, 0);
         border-radius: 15px;
+    }
+
+    #start{
+        margin: 0 auto;
+    }
+    #story, #controls, #about {
+        margin: 10px auto;
     }
 /* ----------- END MENU ----------- */
 
@@ -37,3 +53,4 @@ body {
     /*background-image: url('../IMG/Backround_with_light.png'); */
     background-image: url('../IMG/background_V1_2.jpg');
 }
+
