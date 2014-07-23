@@ -11,10 +11,18 @@
     <script src="Script/jquery.fittext.js"></script>
 </head>
 <body onload="startGame();">
-    <div id="info"><p id="text" data-in-effect="bounce" data-in-sequence="true">Идеята ми е тук да се сложи някакъв текст като мини история за Пешо и неговия път към СофтУни... Здравейте, аз съм Пешо... Чух че името ми е известно в СофтУни и затова ще кандидатствам обаче трябва да натрупам знания по C#... нещо такова... не съм много добър в писането на истории </p>
+    <div id="info" style="display: none;"><p id="text" data-in-effect="bounce" data-in-sequence="true">Идеята ми е тук да се сложи някакъв текст като мини история за Пешо и неговия път към СофтУни... Здравейте, аз съм Пешо... Чух че името ми е известно в СофтУни и затова ще кандидатствам обаче трябва да натрупам знания по C#... нещо такова... не съм много добър в писането на истории </p>
     </div>
    <canvas id="game" width="1000" height="600"></canvas>
     <script>
+        $(function () {
+            $.ajax({
+                url: 'index.html',
+                type: 'POST',
+                context: document.body
+            });
+        });
+        $('#game').hide();
         $(function () {
             //uncomment to animate text
            // $('#text').textillate();

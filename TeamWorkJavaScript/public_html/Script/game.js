@@ -57,6 +57,7 @@ function Player(img, x, y) {
     self.move = function (x, y, direction) {
         player.x += x;
         player.y += y;
+        player.changeImage('./IMG/pesho.png');
         if (direction == 1) {
             1
             player.matrix.col += 1;
@@ -68,6 +69,7 @@ function Player(img, x, y) {
             player.matrix.row += 1;
         }
         else if (direction == 4) {
+            player.changeImage('./IMG/pesho-back.png');
             player.matrix.row -= 1;
         }
     }
@@ -90,6 +92,10 @@ function Player(img, x, y) {
         }
         return false;
     }
+    self.changeImage = function (path) {
+        self.img.src = path;
+        self.img.onload = undefined;
+    }
 }
 
 
@@ -102,7 +108,7 @@ function init() {
 function startGame() {
     init();
     player = new Player({ src: "./IMG/pesho.png" }, 0, 60);
-    ctx.drawImage(player.img, player.x, player.y);
+    //ctx.drawImage(player.img, player.x, player.y);
     level = 1;
     document.addEventListener('keydown', handler, false);
 }
