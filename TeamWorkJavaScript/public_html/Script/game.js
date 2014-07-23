@@ -1,5 +1,6 @@
 ﻿var canvas, ctx;
 var player, level;
+var playerImgFront, playerImgBack;
 var puzzle = [
     [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -46,7 +47,7 @@ function canvasRedraw() {
 
 function Player(img, x, y) {
     var self = this;
-    self.img = new Image();
+    self.img = img;
     self.img.onload = function () {
         ctx.drawImage(self.img, 0, 60);
     };
@@ -57,7 +58,7 @@ function Player(img, x, y) {
     self.move = function (x, y, direction) {
         player.x += x;
         player.y += y;
-        player.changeImage('./IMG/pesho.png');
+        player.changeImage(playerImgFront);
         if (direction == 1) {
             1
             player.matrix.col += 1;
@@ -69,7 +70,7 @@ function Player(img, x, y) {
             player.matrix.row += 1;
         }
         else if (direction == 4) {
-            player.changeImage('./IMG/pesho-back.png');
+            player.changeImage(playerImgBack);
             player.matrix.row -= 1;
         }
     }
@@ -92,8 +93,8 @@ function Player(img, x, y) {
         }
         return false;
     }
-    self.changeImage = function (path) {
-        self.img.src = path;
+    self.changeImage = function (newImg) {
+        self.img = newImg;
         self.img.onload = undefined;
     }
 }
@@ -107,7 +108,11 @@ function init() {
 
 function startGame() {
     init();
-    player = new Player({ src: "./IMG/pesho.png" }, 0, 60);
+    playerImgFront = new Image();
+    playerImgFront.src = "./IMG/pesho.png";
+    playerImgBack = new Image();
+    playerImgBack.src = "./IMG/pesho-back.png";
+    player = new Player(playerImgFront, 0, 60);
     //ctx.drawImage(player.img, player.x, player.y);
     level = 1;
     document.addEventListener('keydown', handler, false);
