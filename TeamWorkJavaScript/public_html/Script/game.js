@@ -1,6 +1,6 @@
 ﻿var canvas, ctx;
 var player, level;
-var puzzle = [ 
+var puzzle = [
     [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0],
@@ -17,7 +17,7 @@ var puzzle = [
 
 function handler(event) {
     if (event.keyCode == 39) { //right 1
-        if(player.checkNextPosition("right")){
+        if (player.checkNextPosition("right")) {
             player.move(40, 0, 1);
         }
     }
@@ -48,49 +48,32 @@ function Player(img, x, y) {
     var self = this;
     self.img = new Image();
     self.img.onload = function () {
-        ctx.drawImage(self.img,0,60);
+        ctx.drawImage(self.img, 0, 60);
     };
     self.img.src = img.src;
     self.x = x;
     self.y = y;
-    self.matrix = {row: 1, col: 0};
+    self.matrix = { row: 1, col: 0 };
     self.move = function (x, y, direction) {
-        if(self.x <= 0){
-            self.x = 1;
-            return;
+        player.x += x;
+        player.y += y;
+        if (direction == 1) {
+            1
+            player.matrix.col += 1;
         }
-        else if(self.x > canvas.width - self.img.width){
-            self.x = canvas.width - self.img.width;
-            return;
+        else if (direction == 2) {
+            player.matrix.col -= 1;
         }
-        else if(self.y < 0){
-            self.y = 1;
-            return;
+        else if (direction == 3) {
+            player.matrix.row += 1;
         }
-        else if(self.y > canvas.height - self.img.height){
-            self.y = canvas.height - self.img.height;
-            return;
-        }
-        else {
-            player.x += x;
-            player.y += y;
-            if (direction == 1) {1
-                player.matrix.col += 1;
-            }
-            else if (direction == 2) {
-                player.matrix.col -= 1;
-            }
-            else if (direction == 3) {
-                player.matrix.row += 1;
-            }
-            else if (direction == 4) {
-                player.matrix.row -= 1;
-            }
+        else if (direction == 4) {
+            player.matrix.row -= 1;
         }
     }
-    self.checkNextPosition = function(direction){
+    self.checkNextPosition = function (direction) {
         var condition;
-        if(direction == "right"){
+        if (direction == "right") {
             condition = (player.matrix.col + 1 < puzzle[level - 1][player.matrix.row].length) && (puzzle[level - 1][player.matrix.row][player.matrix.col + 1] != 0);
         }
         else if (direction == "left") {
@@ -102,7 +85,7 @@ function Player(img, x, y) {
         else if (direction == "down") {
             condition = (player.matrix.row + 1 < puzzle[level - 1].length) && (puzzle[level - 1][player.matrix.row + 1][player.matrix.col] != 0);
         }
-        if(condition){
+        if (condition) {
             return true;
         }
         return false;
