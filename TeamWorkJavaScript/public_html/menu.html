@@ -1,28 +1,8 @@
-﻿<style>
-    @font-face {
-        font-family: 'Indie Flower';
-        src: url('./font/IndieFlower.ttf');
-    }
-    #menu {
-        text-align: center;
-    }
-
-    button {
-        font-family: 'Indie Flower', 'Comic Sans MS', Arial;
-        display: block;
-        margin-top: 15px;
-        width: 500px;
-        height: 75px;
-        border: 0;
-        background: rgb(35, 68, 101);
-        font-size: 2.2em;
-        color: rgb(255, 156, 0);
-        border-radius: 15px;
-    }
-</style>
-<div id="menu">
-    <button id="start">Play</button>
-    <button id="story">Story</button>
-    <button id="controls">How to play?</button>
-    <button id="about">About</button>
-</div>
+﻿<button id="start" onclick="(function () {
+    $('#menu').hide();
+    $('#game').show();
+    startGame();
+})();">Play</button>
+<button id="story">Story</button>
+<button id="controls">How to play?</button>
+<button id="about">About</button>
