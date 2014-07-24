@@ -116,4 +116,5 @@ function startGame() {
     //ctx.drawImage(player.img, player.x, player.y);
     level = 1;
     document.addEventListener('keydown', handler, false);
+    countDown(60,'countdown');
 }

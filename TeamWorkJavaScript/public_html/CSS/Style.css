@@ -20,27 +20,39 @@ body {
     height: 50px;
     margin: 0 auto;
     background-color: forestgreen;
+    font-family: 'Comic Sans MS', Arial, sans-serif;
+    box-sizing: border-box;
 }
-#back, #pause, #score, #timer{
-    display: inline-block;
-    margin: 5px 30px;
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-#back, #pause{
-    background-color: limegreen;
-    border: none;
-}
-#score{
-    padding-left: 400px;
-}
-#music{
-    display: inline-block;
-    vertical-align: middle;
-    width: 35px;
-    height: 35px;
-    background: url("../IMG/sound-on.png") no-repeat;
-}
+    #back, #pause, #score, #timer{
+        display: inline-block;
+        margin: 5px 10px;
+        padding: 5px 10px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        width: 150px;
+        height: 30px;
+    }
+    #back, #pause{
+        background-color: limegreen;
+        border: none;
+        width: 100px;
+        font-family: 'Indie Flower';
+        font-weight: bold;
+    }
+    #score{
+        width: 500px;
+    }
+    #music{
+        display: inline-block;
+        vertical-align: middle;
+        width: 35px;
+        height: 35px;
+        background: url("../IMG/sound-on.png") no-repeat;
+    }
+    #countdown{
+
+    }
+
 
 /* ----------- MENU ----------- */
 @font-face {
