@@ -9,4 +9,3 @@ function countDown(secs, elem){
     secs--;
     timer = setTimeout('countDown('+secs+',"'+elem+'")',1000)
 };
-

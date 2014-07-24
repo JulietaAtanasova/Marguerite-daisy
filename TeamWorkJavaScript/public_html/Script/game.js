@@ -37,6 +37,20 @@ function handler(event) {
             player.move(0, -60, 4);
         }
     }
+    else if (event.keyCode == 32) {
+        if(player.direction == 1){
+            player.shoot(1);
+        }
+        else if (player.direction == 2) {
+            player.shoot(2);
+        }
+        else if (player.direction == 3) {
+            player.shoot(3);
+        }
+        else if (player.direction == 4) {
+            player.shoot(4);
+        }
+    }
     canvasRedraw();
 }
 
@@ -55,24 +69,48 @@ function Player(img, x, y) {
     self.x = x;
     self.y = y;
     self.matrix = { row: 2, col: 0 };
+    self.direction = 0;
+    self.shoot = function (direction) {
+        var canShoot;
+        var count = 0;
+        if (direction == 1) { // right
+            while (puzzle[level - 1][self.matrix.row][self.matrix.col + count + 1] != 0 && self.matrix.col + 1 < puzzle[level - 1][0].length) {
+                count += 1;
+            }
+        }
+        else if (direction == 2) { // left
+            while (puzzle[level - 1][self.matrix.row][self.matrix.col - count - 1] != 0 && self.matrix.col - count > 0) {
+                count += 1;
+            }
+        }
+        else if (direction == 3) { // down
+            while (puzzle[level - 1][self.matrix.row + count + 1][self.matrix.col] != 1 && self.matrix.row + count - 1 < puzzle[level - 1].length - 1) {
+                count += 1;
+            }
+        }
+        else if (direction == 4) { // up
+            
+        }
+        console.log("direction -> " + direction + "\ncount ->" + count);
+    }
     self.move = function (x, y, direction) {
-        player.x += x;
-        player.y += y;
+        self.x += x;
+        self.y += y;
         player.changeImage(playerImgFront);
         if (direction == 1) {
-            1
-            player.matrix.col += 1;
+            self.matrix.col += 1;
         }
         else if (direction == 2) {
-            player.matrix.col -= 1;
+            self.matrix.col -= 1;
         }
         else if (direction == 3) {
-            player.matrix.row += 1;
+            self.matrix.row += 1;
         }
         else if (direction == 4) {
-            player.changeImage(playerImgBack);
-            player.matrix.row -= 1;
+            self.changeImage(playerImgBack);
+            self.matrix.row -= 1;
         }
+        self.direction = direction;
     }
     self.checkNextPosition = function (direction) {
         var condition;

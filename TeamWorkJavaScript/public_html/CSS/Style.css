@@ -17,7 +17,7 @@ body {
 /* -------- NAVIGATION -------- */
 #navigation{
     width: 1000px;
-    height: 50px;
+    height: 37px;
     margin: 0 auto;
     background-color: forestgreen;
     font-family: 'Comic Sans MS', Arial, sans-serif;
@@ -26,11 +26,11 @@ body {
     #back, #pause, #score, #timer{
         display: inline-block;
         margin: 5px 10px;
-        padding: 5px 10px;
+        padding: 3px 10px;
         border-radius: 10px;
         box-sizing: border-box;
         width: 150px;
-        height: 30px;
+        height: 27px;
     }
     #back, #pause{
         background-color: limegreen;
@@ -46,7 +46,7 @@ body {
         display: inline-block;
         vertical-align: middle;
         width: 35px;
-        height: 35px;
+        height: 40px;
         background: url("../IMG/sound-on.png") no-repeat;
     }
     #countdown{
