@@ -23,10 +23,16 @@ body {
 }
 #back, #pause, #score, #timer{
     display: inline-block;
-    margin-bottom: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    padding: 10px;
+    margin: 5px 30px;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+#back, #pause{
+    background-color: limegreen;
+    border: none;
+}
+#score{
+    padding-left: 400px;
 }
 #music{
     display: inline-block;

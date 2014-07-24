@@ -16,9 +16,14 @@
         </div>
         <div id="menu"></div>
         <div id="navigation">
-            <button id="back">Back</button>
+            <button id="back" onclick="(function () {
+                $('#menu').show();
+                $('#game').hide();
+                $('#navigation').hide();
+                startGame();
+            })();">Back</button>
             <button id="pause">Pause</button>
-            <div id="score">Score: </div>
+            <div id="score">Score: 0</div>
             <div id="timer">Time: </div>
             <div id="music"><a href="#"/></div>
         </div>
