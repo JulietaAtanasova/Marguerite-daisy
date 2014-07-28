@@ -5,23 +5,23 @@
     <link href="CSS/Style.css" rel="stylesheet" />
     <link href="CSS/animate.css" rel="stylesheet" />
     <script src="Script/jquery-2.1.1.min.js"></script>
-    <script src="Script/game.js"></script>
     <script src="Script/jquery.lettering.js"></script>
     <script src="Script/jquery.textillate.js"></script>
     <script src="Script/jquery.fittext.js"></script>
     <script src="Script/timer.js"></script>
+    <script>
+        var timer = new Timer(300);
+    </script>
 </head>
 <body>
     <div id="wrapper">
-        <div id="info" style="display: none;"><p id="text" data-in-effect="bounce" data-in-sequence="true">Идеята ми е тук да се сложи някакъв текст като мини история за Пешо и неговия път към СофтУни... Здравейте, аз съм Пешо... Чух че името ми е известно в СофтУни и затова ще кандидатствам обаче трябва да натрупам знания по C#... нещо такова... не съм много добър в писането на истории </p>
-        </div>
         <div id="menu"></div>
         <div id="navigation">
             <button id="back" onclick="(function () {
                 $('#menu').show();
                 $('#game').hide();
                 $('#navigation').hide();
-
+                timer.reset();
                 startGame();
             })();">Back</button>
             <button id="pause">Pause</button>
@@ -44,5 +44,7 @@
             });
         </script>
     </div>
+    <script src="Script/game.js"></script>
+    <script src="Script/ball.js"></script>
 </body>
 </html>
