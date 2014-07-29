@@ -58,6 +58,12 @@ function handler(event) {
       player.shoot(4);
     }
   }
+  for (var i = 0; i < collectibles.length; i += 1){
+    var currentCollectible = collectibles[i];
+    if(currentCollectible.checkIfCollected(player)){
+      collectibles.splice(i,1);
+    }
+  }
   canvasRedraw();
   drawCollectibles();
 }
@@ -69,7 +75,10 @@ function canvasRedraw() {
 
 function drawCollectibles() {
   for (var i = 0; i < collectibles.length; i += 1) {
-    ctx.drawImage(collectIcons[level - 1], collectibles[i].x, collectibles[i].y);
+    var currentCollectible = collectibles[i];
+    if(!currentCollectible.collected){
+      ctx.drawImage(collectibles[i].img, collectibles[i].x, collectibles[i].y);
+    }
   }
 }
 
@@ -179,4 +188,14 @@ function Collectible(row, col) {
   self.col = col;
   self.x = (self.col) * 40;
   self.y = (self.row) * 60;
+  self.collected = false;
+  self.img = collectIcons[level - 1];
+  self.checkIfCollected = function (player) {
+    if(player.matrix.row === self.row && player.matrix.col === self.col){
+      self.collected = true;
+      console.log('collected');
+      return true;
+    }
+    return false;
+  };
 }
