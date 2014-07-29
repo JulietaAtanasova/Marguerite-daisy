@@ -61,25 +61,39 @@ body {
     }
     #menu {
         text-align: center;
-        background-color: grey;
+        background-image: url('../IMG/yellow_meadow.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
         margin: 0px auto;
         padding-top: 50px;
         width: 1000px;
         height: 600px;
     }
-
+    .menu{
+        float: right;
+        width: 311px;
+        height: 653px;
+        background-color: black;
+        opacity: 0.6;
+    
+        margin-top: -53px;
+}
     #start, #story, #controls, #about {
         font-family: 'Indie Flower', 'Comic Sans MS', Arial;
         display: block;
         padding: 15px;
         width: 300px;
         border: 0;
-        background: rgb(35, 68, 101);
-        font-size: 2.2em;
-        color: rgb(255, 156, 0);
-        border-radius: 15px;
+        font-size: 20px;
+        color: #5CADFF;
+        font-weight:bold;
+        background:transparent;
     }
-
+    #start:hover, #story:hover, #controls:hover, #about:hover{
+        cursor:pointer;
+        background-color: #5CADFF;
+        color: black;
+    }
     #start{
         margin: 0 auto;
     }
