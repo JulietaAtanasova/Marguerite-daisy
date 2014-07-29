@@ -25,19 +25,30 @@
                 $('#msg').hide();
                 timer.reset();
                 startGame();
-            })();">Back</button>
+            })();">
+                Back
+            </button>
             <button id="pause" onclick="(function () {
+                if (timer.paused === false) {
+                    document.removeEventListener('keydown', handler, false);
+                    $('#msg').show();
+                }
+                else {
+                    document.addEventListener('keydown', handler, false);
+                    $('#msg').hide();
+                }
                 getMessage();
-                $('#msg').show();
                 $('#menu').hide();
                 timer.pause();
-            })();">Pause</button>
+            })();">
+                Pause
+            </button>
             <div id="score">Score: <span>0000</span></div>
             <div id="timer">Time: <span id="countdown"></span></div>
-            <div id="music"><a href="#"/></div>
+            <div id="music"><a href="#" /></div>
         </div>
         <div id="msg"></div>
-       <canvas id="game" width="1000" height="600"></canvas>
+        <canvas id="game" width="1000" height="600"></canvas>
         <script>
             $(function () {
                 $.get('menu.html', function (data) {
@@ -49,7 +60,7 @@
             $('#navigation').hide();
             $(function () {
                 //uncomment to animate text
-               // $('#text').textillate();
+                // $('#text').textillate();
             });
         </script>
     </div>
