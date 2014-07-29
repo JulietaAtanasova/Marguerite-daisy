@@ -48,6 +48,7 @@ body {
         width: 35px;
         height: 40px;
         background: url("../IMG/sound-on.png") no-repeat;
+        border: none;
     }
     #countdown{
 

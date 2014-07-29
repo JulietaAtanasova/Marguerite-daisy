@@ -45,7 +45,10 @@
             </button>
             <div id="score">Score: <span>0000</span></div>
             <div id="timer">Time: <span id="countdown"></span></div>
-            <div id="music"><a href="#" /></div>
+            <button id="music"onclick="(function () {
+                $('#music').css('background-image', 'url(\'./IMG/sound-off.png\')');
+            })();">
+            </button>
         </div>
         <div id="msg"></div>
         <canvas id="game" width="1000" height="600"></canvas>
