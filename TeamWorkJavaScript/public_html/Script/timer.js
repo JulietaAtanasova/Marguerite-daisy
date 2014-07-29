@@ -12,14 +12,14 @@ function Timer(seconds) {
       self.seconds = self.time % 60;
       self.render();
     }, self.INTERVAL);
-  }
+  };
   self.stop = function () {
     clearInterval(a);
-  }
+  };
   self.reset = function () {
     self.stop();
     self.time = seconds;
-  }
+  };
   self.render = function () {
     console.log(self.minutes + " : " + self.seconds);
   }

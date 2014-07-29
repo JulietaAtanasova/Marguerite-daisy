@@ -93,4 +93,17 @@ body {
     /*background-image: url('../IMG/Backround_with_light.png'); */
     background-image: url('../IMG/background_V1_2.jpg');
 }
+/* ----------- MESSAGE ----------- */
+#msg{
+    width: 400px;
+    height: 200px;
+    margin:  5% 27%;
+    position: absolute;
+    display: block;
+    background-color: yellowgreen;
+    border-radius: 10px;
+    opacity: 0.9;
+    color: #000000;
+    font-family: 'Indie Flower', 'Comic Sans MS', Arial;
+}
 
