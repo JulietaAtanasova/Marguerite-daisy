@@ -2,8 +2,8 @@
     [
         [0, 1, 1, 2, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0],
         [0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 2, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0],
-        [1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0],
+        [1, 2, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0],
         [0, 1, 1, 1, 1, 1, 2, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 1, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0],
         [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0],
@@ -11,11 +11,12 @@
         [0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
         [0, 1, 1, 1, 2, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0]
     ]
-], player, level = 1,
+], player, scores = 0, level = 1,
 levelPuzzle = puzzle[level - 1],
 collectibles = [],
 canvas, ctx,
-playerImgFront, playerImgBack;
+playerImgFront, playerImgBack,
+  collectIcons = [];
 
 playerImgFront = new Image();
 playerImgFront.src = "./IMG/pesho.png";
@@ -57,18 +58,8 @@ function handler(event) {
       player.shoot(4);
     }
   }
-  if (checkForCollectable(player.matrix.row, player.matrix.col)) {
-    // add points and delete collectible
-    // change checkForCollectable function implementation
-  }
   canvasRedraw();
-}
-
-function checkForCollectable(row, col) {
-  if (puzzle[level - 1][row][col] !== 0 && puzzle[level - 1][row][col] !== 1) {
-    return true;
-  }
-  return false;
+  drawCollectibles();
 }
 
 function canvasRedraw() {
@@ -76,11 +67,24 @@ function canvasRedraw() {
   ctx.drawImage(player.img, player.x, player.y);
 }
 
+function drawCollectibles() {
+  for (var i = 0; i < collectibles.length; i += 1) {
+    ctx.drawImage(collectIcons[level - 1], collectibles[i].x, collectibles[i].y);
+  }
+}
+
 function initCollectibles() {
+  var collectSize = 4;
+  var paths = ['./IMG/cSharp.png', './IMG/eclipse.png', './IMG/html5.png', './IMG/css.png'];
+  for (i = 0; i < collectSize; i += 1) {
+    var img = new Image();
+    img.src = paths[0];
+    collectIcons.push(img);
+  }
   for (var i = 0; i < levelPuzzle.length; i += 1) {
     for (var j = 0; j < levelPuzzle[i].length; j += 1) {
       if (levelPuzzle[i][j] === 2) {
-        var colCoords = { row: i, col: j };
+        var colCoords = new Collectible(i, j);
         collectibles.push(colCoords);
       }
     }
@@ -99,6 +103,7 @@ function startGame(lvl) {
   canvas.width = canvas.width;
   player = new Player(playerImgFront, 0, 120);
   ctx.drawImage(player.img, player.x, player.y);
+  drawCollectibles();
   document.addEventListener('keydown', handler, false);
 }
 
@@ -135,6 +140,14 @@ function Player(img, x, y) {
     }
     self.direction = direction;
   };
+  self.checkCurrentPosition = function() {
+    for (i = 0; i < collectibles.length; i += 1){
+      if(self.matrix.row === collectibles[i].row && self.matrix.col === collectibles[i].col){
+        return true;
+      }
+    }
+    return false;
+  };
   self.checkNextPosition = function (direction) {
     var condition;
     if (direction == "right") {
@@ -164,6 +177,6 @@ function Collectible(row, col) {
   var self = this;
   self.row = row;
   self.col = col;
-  self.x = (self.col + 1) * 40;
-  self.y = (self.row + 1) * 60;
+  self.x = (self.col) * 40;
+  self.y = (self.row) * 60;
 }
