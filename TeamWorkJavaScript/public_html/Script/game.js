@@ -23,79 +23,83 @@ playerImgBack = new Image();
 playerImgBack.src = "./IMG/pesho-back.png";
 
 function handler(event) {
-    if (event.keyCode == 39) { //right 1
-        if (player.checkNextPosition("right")) {
-            player.move(40, 0, 1);
-        }
+  if (event.keyCode == 39) { //right 1
+    if (player.checkNextPosition("right")) {
+      player.move(40, 0, 1);
     }
-    else if (event.keyCode == 37) { //left 2
-        if (player.checkNextPosition("left")) {
-            player.move(-40, 0, 2);
-        }
+  }
+  else if (event.keyCode == 37) { //left 2
+    if (player.checkNextPosition("left")) {
+      player.move(-40, 0, 2);
     }
-    else if (event.keyCode == 40) { // down 3
-        if (player.checkNextPosition("down")) {
-            player.move(0, 60, 3);
-        }
+  }
+  else if (event.keyCode == 40) { // down 3
+    if (player.checkNextPosition("down")) {
+      player.move(0, 60, 3);
     }
-    else if (event.keyCode == 38) { // up 4
-        if (player.checkNextPosition("up")) {
-            player.move(0, -60, 4);
-        }
+  }
+  else if (event.keyCode == 38) { // up 4
+    if (player.checkNextPosition("up")) {
+      player.move(0, -60, 4);
     }
-    else if (event.keyCode == 32) {
-        if(player.direction == 1){
-            player.shoot(1);
-        }
-        else if (player.direction == 2) {
-            player.shoot(2);
-        }
-        else if (player.direction == 3) {
-            player.shoot(3);
-        }
-        else if (player.direction == 4) {
-            player.shoot(4);
-        }
+  }
+  else if (event.keyCode == 32) {
+    if (player.direction == 1) {
+      player.shoot(1);
     }
-    if (checkForCollectable(player.matrix.row, player.matrix.col)) {
-      // add points and delete collectible
-      // change checkForCollectable function implementation
+    else if (player.direction == 2) {
+      player.shoot(2);
     }
-    canvasRedraw();
+    else if (player.direction == 3) {
+      player.shoot(3);
+    }
+    else if (player.direction == 4) {
+      player.shoot(4);
+    }
+  }
+  if (checkForCollectable(player.matrix.row, player.matrix.col)) {
+    // add points and delete collectible
+    // change checkForCollectable function implementation
+  }
+  canvasRedraw();
 }
 
 function checkForCollectable(row, col) {
-  if(puzzle[level - 1][row][col] !== 0 && puzzle[level - 1][row][col] !== 1){
+  if (puzzle[level - 1][row][col] !== 0 && puzzle[level - 1][row][col] !== 1) {
     return true;
   }
   return false;
 }
 
 function canvasRedraw() {
-    canvas.width = canvas.width;
-    ctx.drawImage(player.img, player.x, player.y);
+  canvas.width = canvas.width;
+  ctx.drawImage(player.img, player.x, player.y);
 }
 
-function init() {
-    canvas = document.getElementById('game');
-    ctx = canvas.getContext('2d');
-    for (var i = 0; i < levelPuzzle.length; i += 1){
-      for (var j = 0; j < levelPuzzle[i].length; j += 1){
-        if (levelPuzzle[i][j] === 2) {
-          var colCoords = { row: i, col: j };
-          collectibles.push(colCoords);
-        }
+function initCollectibles() {
+  for (var i = 0; i < levelPuzzle.length; i += 1) {
+    for (var j = 0; j < levelPuzzle[i].length; j += 1) {
+      if (levelPuzzle[i][j] === 2) {
+        var colCoords = { row: i, col: j };
+        collectibles.push(colCoords);
       }
     }
+  }
 }
 
-function startGame() {
-    init();
-    canvas.width = canvas.width;
-    player = new Player(playerImgFront, 0, 120);
-    ctx.drawImage(player.img, player.x, player.y);
-    level = 1;
-    document.addEventListener('keydown', handler, false);
+function init(lvl) {
+  level = lvl
+  canvas = document.getElementById('game');
+  ctx = canvas.getContext('2d');
+}
+
+function startGame(lvl) {
+  init(lvl);
+  initCollectibles();
+  canvas.width = canvas.width;
+  player = new Player(playerImgFront, 0, 120);
+  ctx.drawImage(player.img, player.x, player.y);
+  document.addEventListener('keydown', handler, false);
 }
 
 function Player(img, x, y) {
