@@ -11,7 +11,7 @@
     <script src="Script/timer.js"></script>
     <script src="Script/messages.js"></script>
     <script>
-        var timer = new Timer(300);
+        var timer = new Timer(30);
     </script>
 </head>
 <body>
@@ -30,7 +30,7 @@
                 getMessage();
                 $('#msg').show();
                 $('#menu').hide();
-                timer.stop();
+                timer.pause();
             })();">Pause</button>
             <div id="score">Score: <span>0000</span></div>
             <div id="timer">Time: <span id="countdown"></span></div>
