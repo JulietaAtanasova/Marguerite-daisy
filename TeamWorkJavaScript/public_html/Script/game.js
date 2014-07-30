@@ -1,9 +1,9 @@
-var puzzle = [
+﻿var puzzle = [
     [
         [0, 1, 1, 2, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0],
-        [0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 2, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 2, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0],
         [1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0],
         [0, 1, 1, 1, 1, 1, 2, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 1, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0],
         [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0],
@@ -60,7 +60,12 @@ function handler(event) {
     var currentCollectible = level.collectibles[i];
     if (currentCollectible.checkIfCollected(player)) {
       level.collectibles.splice(i, 1);
-      scores += 10 * level.level;
+      if (currentCollectible.behave === '+') {
+        scores += 10 * level.level;
+      }
+      else if (currentCollectible.behave === '-') {
+        scores -= 10 * level.level;
+      }
     }
   }
   canvasRedraw();
@@ -81,11 +86,14 @@ function init(lvl) {
 }
 
 function startGame(lvl) {
-  lvl = new Level(lvl,puzzle);
+  lvl = new Level(lvl, puzzle);
   scores = 0;
   lvl.renderScore();
   init(lvl);
-  level.initCollectibles();
+  var collectPaths = ['./IMG/cSharp.png', './IMG/eclipse.png', './IMG/html5.png', './IMG/css.png'];
+  var enemyPaths = ['./IMG/2048.png', './IMG/beer.png', './IMG/girl2.png', './IMG/planeta-tv.png'];
+  level.initCollectibles(collectPaths);
+  level.initEnemyCollectibles(enemyPaths);
   canvas.width = canvas.width;
   player = new Player(playerImgFront, 0, 120);
   ctx.drawImage(player.img, player.x, player.y);
@@ -161,6 +169,7 @@ function Player(img, x, y) {
 
 function Collectible(row, col) {
   var self = this;
+  self.behave = '+';
   self.row = row;
   self.col = col;
   self.x = (self.col) * 40;
@@ -183,9 +192,9 @@ function Level(lvl, puzzle) {
   self.levelPuzzle = puzzle[self.level - 1];
   self.collectibles = [];
   self.collectIcons = [];
-  self.initCollectibles = function () {
-    var collectSize = 4;
-    var paths = ['./IMG/cSharp.png', './IMG/eclipse.png', './IMG/html5.png', './IMG/css.png'];
+  self.enemyIcons = [];
+  self.initCollectibles = function (paths) {
+    var collectSize = paths.length;
     for (i = 0; i < collectSize; i += 1) {
       var img = new Image();
       img.src = paths[i];
@@ -194,8 +203,24 @@ function Level(lvl, puzzle) {
     for (var i = 0; i < self.levelPuzzle.length; i += 1) {
       for (var j = 0; j < self.levelPuzzle[i].length; j += 1) {
         if (self.levelPuzzle[i][j] === 2) {
-          var colCoords = new Collectible(i, j);
-          self.collectibles.push(colCoords);
+          var col = new Collectible(i, j);
+          self.collectibles.push(col);
+        }
+      }
+    }
+  };
+  self.initEnemyCollectibles = function (paths) {
+    var collectSize = paths.length;
+    for (i = 0; i < collectSize; i += 1) {
+      var img = new Image();
+      img.src = paths[i];
+      self.enemyIcons.push(img);
+    }
+    for (var i = 0; i < self.levelPuzzle.length; i += 1) {
+      for (var j = 0; j < self.levelPuzzle[i].length; j += 1) {
+        if (self.levelPuzzle[i][j] === 3) {
+          var enm = new Enemy(i, j);
+          self.collectibles.push(enm);
         }
       }
     }
@@ -212,15 +237,36 @@ function Level(lvl, puzzle) {
     $('#points').text(scores);
   };
   self.checkIfCompleted = function () {
-    function prepareNextLevel () {
+    function prepareNextLevel() {
       // draw arrow for next level
       console.log('completed');
     }
-    if(self.collectibles.length === 0) {
+    if (self.collectibles.length === 0) {
       self.completed = true;
     }
     if (self.completed) {
       prepareNextLevel();
     }
+  };
+}
+
+function Enemy(row, col) {
+  var self = this;
+  self.behave = '-';
+  self.row = row;
+  self.col = col;
+  self.x = (self.col) * 40;
+  self.y = (self.row) * 60;
+  self.collected = false;
+  function randomIndex(max) {
+    return Math.floor(Math.random() * max);
+  }
+  self.img = level.enemyIcons[randomIndex(level.enemyIcons.length)];
+  self.checkIfCollected = function (player) {
+    if (player.matrix.row === self.row && player.matrix.col === self.col) {
+      self.collected = true;
+      return true;
+    }
+    return false;
   };
 }

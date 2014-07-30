@@ -1,4 +1,4 @@
-var messages = ['PAUSE','LEVEL COMPLETED','GAME OVER'];
+var messages = ['PAUSE','LEVEL COMPLETED','GAME OVER', 'YOU WIN!', 'YOU LOSE'];
 
 function getMessage (index){
     $(function () {
@@ -9,13 +9,21 @@ function getMessage (index){
     });
 };
 
-var about = 'This game is developed from students at Software University. Developers:...';
+var about = ['This game is developed from students at Software University.', 'Developers: ', 'Julieta Atanasova', 'Stoyanka Nikiforova', 'Vladislav Hadzhiyski', 'Yuliyan Kostov', ' ', '&copy;2014'];
 
 function getAboutInfo(index){
     $(function () {
         $.get('message.html', function (data) {
             $('#aboutInfo').html(data);
-            $('#aboutInfo').text(index);
+            var text = "";
+            for (var i = 0; i < index.length; i++) {
+                if((i === 1)||(i === index.length-1)){
+                    text += "<p><strong>" + index[i] + '</strong></p>';
+                } else {
+                    text += "<p>" + index[i] + '</p>';
+                }
+            }
+            $('#aboutInfo').html(text);
         });
     });
 };
