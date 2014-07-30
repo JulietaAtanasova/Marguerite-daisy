@@ -1,12 +1,12 @@
 ﻿var puzzle = [
     [
         [0, 1, 1, 2, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0],
-        [0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 2, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0],
+        [0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 2, 1, 0, 0, 1, 1, 3, 1, 1, 1, 1, 0],
         [1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 1, 3, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0],
         [0, 1, 1, 1, 1, 1, 2, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 1, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0],
-        [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0],
+        [0, 3, 1, 1, 1, 0, 1, 1, 1, 1, 1, 3, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0],
         [0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 2, 0, 1, 1, 1, 1, 1, 1, 2, 0, 1, 0],
         [0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0],
         [0, 1, 1, 1, 2, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0]
@@ -90,8 +90,8 @@ function startGame(lvl) {
   scores = 0;
   lvl.renderScore();
   init(lvl);
-  var collectPaths = ['./IMG/cSharp.png', './IMG/eclipse.png', './IMG/html5.png', './IMG/css.png'];
-  var enemyPaths = ['./IMG/2048.png', './IMG/beer.png', './IMG/girl2.png', './IMG/planeta-tv.png'];
+  var collectPaths = [['./IMG/Img_Visual Studio1.png'], ['./IMG/eclipse.png'], ['./IMG/html5.png'], ['./IMG/css.png']];
+  var enemyPaths = [['./IMG/planeta-tv.png', './IMG/blonde-girl.png', './IMG/beer.png'], ['./IMG/2048.png', './IMG/beer.png'], ['./IMG/2048.png', './IMG/beer.png', './IMG/girl2.png']];
   level.initCollectibles(collectPaths);
   level.initEnemyCollectibles(enemyPaths);
   canvas.width = canvas.width;
@@ -195,11 +195,9 @@ function Level(lvl, puzzle) {
   self.enemyIcons = [];
   self.initCollectibles = function (paths) {
     var collectSize = paths.length;
-    for (i = 0; i < collectSize; i += 1) {
-      var img = new Image();
-      img.src = paths[i];
-      self.collectIcons.push(img);
-    }
+    var img = new Image();
+    img.src = paths[level.level - 1][0];
+    self.collectIcons.push(img);
     for (var i = 0; i < self.levelPuzzle.length; i += 1) {
       for (var j = 0; j < self.levelPuzzle[i].length; j += 1) {
         if (self.levelPuzzle[i][j] === 2) {
@@ -210,10 +208,10 @@ function Level(lvl, puzzle) {
     }
   };
   self.initEnemyCollectibles = function (paths) {
-    var collectSize = paths.length;
+    var collectSize = paths[level.level - 1].length;
     for (i = 0; i < collectSize; i += 1) {
       var img = new Image();
-      img.src = paths[i];
+      img.src = paths[level.level - 1][i];
       self.enemyIcons.push(img);
     }
     for (var i = 0; i < self.levelPuzzle.length; i += 1) {
