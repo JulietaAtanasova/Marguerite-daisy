@@ -19,28 +19,43 @@ body {
     width: 1000px;
     height: 37px;
     margin: 0 auto;
-    background-color: forestgreen;
+    background-color: black;
     font-family: 'Comic Sans MS', Arial, sans-serif;
     box-sizing: border-box;
+    padding-bottom: 44px;
 }
-    #back, #pause, #score, #timer{
+    #score, #timer{
         display: inline-block;
         margin: 5px 10px;
         padding: 3px 10px;
-        border-radius: 10px;
         box-sizing: border-box;
         width: 150px;
         height: 27px;
+        color: #5CADFF;
     }
     #back, #pause{
-        background-color: limegreen;
-        border: none;
-        width: 100px;
         font-family: 'Indie Flower';
         font-weight: bold;
+        display: inline-block;
+        color: #5CADFF;
+        margin-right: 17px;
+        width: 100px;
+    }
+    #back:hover, #pause:hover{
+        background-color: #5CADFF;
+        font-family: 'Indie Flower';
+        color: black;
+        cursor: pointer;
+        -webkit-transition: all .1s ease; /* For Safari 3.1 to 6.0 */
+        transition: width 1s linear 2s;
+    }
+    #pause:focus{
+        background-color: #5CADFF;
+        color: black;
     }
     #score{
         width: 500px;
+        color: #5CADFF;
     }
     #music{
         display: inline-block;
@@ -49,6 +64,7 @@ body {
         height: 40px;
         background: url("../IMG/sound-on.png") no-repeat;
         border: none;
+        color: #5CADFF;
     }
 
 /* ----------- MENU ----------- */
