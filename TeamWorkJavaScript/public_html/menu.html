@@ -8,8 +8,14 @@
         timer.start();
     })();">Play</button>
     <button id="story">Story</button>
-    <button id="controls">How to play?</button>
-    <button id="about"onclick="(function () {
+    <button id="controls"onclick="(function () {
+        $('.menu').css('width', '100%');
+        $('.menu button').css('marginRight', '10px');
+        $('.menu button').css('display', 'block');
+        $('#aboutInfo').show();
+        getHowToPlay(howTo);
+    })();">How to play?</button>
+    <button id="about" onclick="(function () {
         $('.menu').css('width', '100%');
         $('.menu button').css('marginRight', '10px');
         $('.menu button').css('display', 'block');
