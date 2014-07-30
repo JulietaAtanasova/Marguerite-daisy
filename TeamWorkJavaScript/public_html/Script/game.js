@@ -85,13 +85,19 @@ function handler(event) {
     if (currentCollectible.checkIfCollected(player)) {
       level.collectibles.splice(i, 1);
       if (currentCollectible.behave === '+') {
+        level.collectiblesCount -= 1;
         scores += 10 * level.level;
       }
       else if (currentCollectible.behave === '-') {
+        level.enemiesCount -= 1;
         scores -= 10 * level.level;
       }
     }
   }
+  console.log(level.collectibles[9].row, level.collectibles[9].col);
+  level.collectibles[9].checkAvailableDirections();
+  level.collectibles[9].changeDirection(level.collectibles[9].availableDirections);
+  level.collectibles[9].move();
   canvasRedraw();
   level.drawCollectibles();
   level.renderScore();
@@ -217,19 +223,26 @@ function Level(lvl, puzzle) {
   self.collectibles = [];
   self.collectIcons = [];
   self.enemyIcons = [];
+  self.enemiesCount = 0;
+  self.collectiblesCount = 0;
+  self.collectObjectsCount = 0;
   self.initCollectibles = function (paths) {
     var collectSize = paths.length;
     var img = new Image();
     img.src = paths[level.level - 1][0];
     self.collectIcons.push(img);
+    var count = 0;
     for (var i = 0; i < self.levelPuzzle.length; i += 1) {
       for (var j = 0; j < self.levelPuzzle[i].length; j += 1) {
         if (self.levelPuzzle[i][j] === 2) {
           var col = new Collectible(i, j);
           self.collectibles.push(col);
+          count += 1;
         }
       }
     }
+    self.collectiblesCount = count;
+    self.collectObjectsCount += count;
   };
   self.initEnemyCollectibles = function (paths) {
     var collectSize = paths[level.level - 1].length;
@@ -238,14 +251,18 @@ function Level(lvl, puzzle) {
       img.src = paths[level.level - 1][i];
       self.enemyIcons.push(img);
     }
+    var count = 0;
     for (var i = 0; i < self.levelPuzzle.length; i += 1) {
       for (var j = 0; j < self.levelPuzzle[i].length; j += 1) {
         if (self.levelPuzzle[i][j] === 3) {
           var enm = new Enemy(i, j);
           self.collectibles.push(enm);
+          count += 1;
         }
       }
     }
+    self.enemiesCount = count;
+    self.collectObjectsCount += count;
   };
   self.drawCollectibles = function () {
     for (var i = 0; i < self.collectibles.length; i += 1) {
@@ -263,7 +280,7 @@ function Level(lvl, puzzle) {
       // draw arrow for next level
       console.log('completed');
     }
-    if (self.collectibles.length === 0) {
+    if (self.collectiblesCount <= 0 && self.enemiesCount > 0) {
       self.completed = true;
     }
     if (self.completed) {
@@ -279,6 +296,10 @@ function Enemy(row, col) {
   self.col = col;
   self.x = (self.col) * 40;
   self.y = (self.row) * 60;
+  self.changeCoords = function () {
+    self.x = (self.col) * 40;
+    self.y = (self.row) * 60;
+  };
   self.collected = false;
   function randomIndex(max) {
     return Math.floor(Math.random() * max);
@@ -290,5 +311,55 @@ function Enemy(row, col) {
       return true;
     }
     return false;
+  };
+  self.availableDirections = [];
+  self.nextDirection = '';
+  self.checkAvailableDirections = function () {
+    self.availableDirections = new Array();
+    if (level.levelPuzzle[self.row][self.col + 1] !== 0) { // right
+      if (self.col + 1 > 0 && self.col + 1 < level.levelPuzzle[0].length - 1) {
+        self.availableDirections.push('R');
+      }
+    }
+    if (level.levelPuzzle[self.row][self.col - 1] !== 0) { // left
+      if (self.col - 1 > 0 && self.col - 1 < level.levelPuzzle[0].length - 1) {
+        self.availableDirections.push('L');
+      }
+    }
+    if (level.levelPuzzle[self.row - 1][self.col] !== 0) { // up
+      if (self.row - 1 > 0 && self.row - 1 < level.levelPuzzle.length - 1) {
+        self.availableDirections.push('U');
+      }
+    }
+    if (level.levelPuzzle[self.row + 1][self.col] !== 0) { // down
+      if (self.row + 1 > 0 && self.row + 1 < level.levelPuzzle[0].length - 1) {
+        self.availableDirections.push('D');
+      }
+    }
+  };
+  self.changeDirection = function (availableDirections) {
+    var index = Math.floor(Math.random() * 4);
+    if (availableDirections[index] !== undefined) {
+      self.nextDirection = availableDirections[index];
+    }
+  };
+  self.move = function (direction) {
+    if (self.nextDirection === 'R') {
+      self.col += 1;
+      self.changeCoords();
+    }
+    else if (self.nextDirection === 'L') {
+      self.col -= 1;
+      self.changeCoords();
+    }
+    else if (self.nextDirection === 'U') {
+      self.row -= 1;
+      self.changeCoords();
+    }
+    else if (self.nextDirection === 'D') {
+      self.row += 1;
+      self.changeCoords();
+    }
+    console.log(self.nextDirection);
   };
 }
