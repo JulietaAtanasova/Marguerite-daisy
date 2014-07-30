@@ -1,8 +1,8 @@
 body {
     text-align: center;
     background-color: palegoldenrod;
-    margin: 0;
-    padding: 0;
+    /* margin: 0; */
+    /* padding: 0; */
 }
 #wrapper{
     margin: 0 auto;
@@ -58,22 +58,21 @@ body {
     }
     #menu {
         text-align: center;
-        background-image: url('../IMG/yellow_meadow.jpg');
+        background-image: url('../IMG/background_Menu_V3.jpg');
         background-repeat: no-repeat;
         background-size: cover;
         margin: 0px auto;
-        padding-top: 50px;
         width: 1000px;
         height: 600px;
     }
     .menu{
         float: right;
-        width: 311px;
-        height: 653px;
+        width: 312px;
+        height: 511px;
         background-color: black;
         opacity: 0.6;
-    
-        margin-top: -53px;
+        padding-top: 89px;
+        margin-top: 0px;
 }
     #start, #story, #controls, #about {
         font-family: 'Indie Flower', 'Comic Sans MS', Arial;
@@ -81,7 +80,7 @@ body {
         padding: 15px;
         width: 300px;
         border: 0;
-        font-size: 20px;
+        font-size: 15px;
         color: #5CADFF;
         font-weight:bold;
         background:transparent;
@@ -90,7 +89,18 @@ body {
         cursor:pointer;
         background-color: #5CADFF;
         color: black;
+        font-size: 30px;
+        -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+        transition: all .3s ease;
     }
+    #start:focus, #story:focus, #controls:focus, #about:focus{
+    cursor:pointer;
+    background-color: #5CADFF;
+    color: black;
+    font-size: 30px;
+    -webkit-transition: width 2s; /* For Safari 3.1 to 6.0 */
+    transition: all .3s ease;
+}
     #start{
         margin: 0 auto;
     }
