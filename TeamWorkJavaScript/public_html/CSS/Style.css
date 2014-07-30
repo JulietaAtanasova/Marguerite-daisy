@@ -119,23 +119,23 @@ body {
     margin:  5% 27%;
     position: absolute;
     display: block;
-    background-color: yellowgreen;
+    background-color: #5CADFF;
     border-radius: 10px;
-    opacity: 0.9;
+    opacity: 0.8;
     color: #000000;
     font-family: 'Indie Flower', 'Comic Sans MS', Arial;
 }
 /* ----------- MESSAGE ----------- */
 #aboutInfo, #howToPlay, #gameStory{
     width: 500px;
-    height: 400px;
-    margin:  -40% 10%;
+    height: 450px;
+    margin:  -37% 10%;
     padding-top: 10px;
     position: absolute;
     display: block;
     background-color: #5CADFF;
     border-radius: 10px;
-    opacity: 0.5;
+    opacity: 0.8;
     color: #000000;
     font-family: Tahoma, Arial, sans-serif;
     font-size: 20px;

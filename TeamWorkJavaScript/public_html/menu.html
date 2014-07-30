@@ -2,14 +2,15 @@
     ﻿<button id="start" onclick="(function () {
         $('#menu').hide();
         $('#msg').hide();
+        $('#gameStory').hide();
+        $('#howToPlay').hide();
+        $('#aboutInfo').hide();
         $('#game').show();
         $('#navigation').show();
         startGame(1);
         timer.start();
     })();">Play</button>
     <button id="story"onclick="(function () {
-        $('.menu').css('width', '100%');
-        $('.menu button').css('marginRight', '10px');
         $('.menu button').css('display', 'block');
         $('#gameStory').show();
         $('#howToPlay').hide();
@@ -17,8 +18,6 @@
         getStory(gameStory);
     })();">Story</button>
     <button id="controls"onclick="(function () {
-        $('.menu').css('width', '100%');
-        $('.menu button').css('marginRight', '10px');
         $('.menu button').css('display', 'block');
         $('#howToPlay').show();
         $('#aboutInfo').hide();
@@ -26,8 +25,6 @@
         getHowToPlay(howTo);
     })();">How to play?</button>
     <button id="about" onclick="(function () {
-        $('.menu').css('width', '100%');
-        $('.menu button').css('marginRight', '10px');
         $('.menu button').css('display', 'block');
         $('#aboutInfo').show();
         $('#howToPlay').hide();
