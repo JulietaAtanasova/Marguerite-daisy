@@ -39,13 +39,13 @@ function getHowToPlay(index){
     });
 };
 
-var gameStory = 'Pesho is a football player, but he dreams to be programmer. He wants to be student at SoftUni. Can you help him to become programmer?';
+var gameStory = '<p><img src="IMG/pesho.png"/></p><p><strong>Pesho </strong>has always been dreaming about two things: to play football like Cristiano Ronaldo and to code like Svetlin Nakov.</p> <p>Now he is footballer in the powerful bulgarian football club <strong>"Gigant (Belene)"</strong>.</p> <p>After this great success, Pesho is ready to walk in the footsteps of his other idol - Nakov. He wants to be a student at<strong> SoftUni</strong>.</p><p>Can you help him to become a programmer?</p>';
 
 function getStory(index){
     $(function () {
         $.get('message.html', function (data) {
             $('#gameStory').html(data);
-            $('#gameStory').text(index);
+            $('#gameStory').html(index);
         });
     });
 };
