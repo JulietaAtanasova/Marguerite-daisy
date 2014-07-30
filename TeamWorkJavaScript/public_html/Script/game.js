@@ -114,6 +114,8 @@ function init(lvl) {
 }
 
 function startGame(lvl) {
+  scores = 0;
+  renderScore();
   init(lvl);
   initCollectibles();
   canvas.width = canvas.width;
