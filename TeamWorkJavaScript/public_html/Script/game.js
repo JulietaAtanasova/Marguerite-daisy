@@ -35,7 +35,9 @@
         [1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0],
         [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 2, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0]
     ]
-], player, scores = 0, level,
+], player, level,
+scores = 0, minScores = [70, 80, 90],
+speed = [700, 600, 500],
 levelPuzzle,
 canvas, ctx,
 playerImgFront, playerImgBack;
@@ -94,10 +96,6 @@ function handler(event) {
       }
     }
   }
-  console.log(level.collectibles[9].row, level.collectibles[9].col);
-  level.collectibles[9].checkAvailableDirections();
-  level.collectibles[9].changeDirection(level.collectibles[9].availableDirections);
-  level.collectibles[9].move();
   canvasRedraw();
   level.drawCollectibles();
   level.renderScore();
@@ -129,6 +127,28 @@ function startGame(lvl) {
   ctx.drawImage(player.img, player.x, player.y);
   level.drawCollectibles();
   document.addEventListener('keydown', handler, false);
+  var enemyMovement = setInterval(function () {
+    for (var i = 0; i < level.enemiesCount; i += 1) {
+      var enemy = level.collectibles[i + level.collectiblesCount]; // only enemies
+      enemy.checkAvailableDirections();
+      enemy.changeDirection(enemy.availableDirections);
+      enemy.move(enemy.nextDirection);
+      canvasRedraw();
+      level.drawCollectibles();
+    }
+  }, speed[level.level - 1]);
+  var isOver = false;
+  var gameOver = setInterval(function () {
+    if (isOver) {
+      // add game over screen
+      return;
+    }
+    if ((level.collectiblesCount === 0 && scores < minScores[level.level - 1]) || timer.time === 0) {
+      isOver = true;
+      clearInterval(enemyMovement);
+      document.removeEventListener('keydown', handler, false);
+    }
+  }, speed[level.level - 1]);
 }
 
 function Player(img, x, y) {
@@ -219,6 +239,8 @@ function Level(lvl, puzzle) {
   var self = this;
   self.completed = false;
   self.level = lvl;
+  self.levelsPicPaths = ['./IMG/background_V1_2.jpg', './IMG/backgroundV2_2.jpg', './IMG/backgroundV2_3.jpg'];
+  self.endPoint = [{ x: 920, y: 540 }, { x: 920, y: 540 }, { x: 920, y: 540 }];
   self.levelPuzzle = puzzle[self.level - 1];
   self.collectibles = [];
   self.collectIcons = [];
@@ -277,8 +299,18 @@ function Level(lvl, puzzle) {
   };
   self.checkIfCompleted = function () {
     function prepareNextLevel() {
-      // draw arrow for next level
-      console.log('completed');
+      var nextLevelImg = new Image();
+      nextLevelImg.src = './IMG/next-down.png';
+      nextLevelImg.onload = function () {
+        
+      }
+      ctx.drawImage(nextLevelImg, level.endPoint[level.level - 1].x, level.endPoint[level.level - 1].y);
+      if (player.matrix.row === 9 && player.matrix.col === 23) {
+        var nextLvl = level.level + 1;
+        var bgUrl = 'url(\'' + level.levelsPicPaths[level.level] + '\')';
+        $('#game').css('background-image', bgUrl);
+        startGame(nextLvl);
+      }
     }
     if (self.collectiblesCount <= 0 && self.enemiesCount > 0) {
       self.completed = true;
@@ -316,50 +348,42 @@ function Enemy(row, col) {
   self.nextDirection = '';
   self.checkAvailableDirections = function () {
     self.availableDirections = new Array();
-    if (level.levelPuzzle[self.row][self.col + 1] !== 0) { // right
-      if (self.col + 1 > 0 && self.col + 1 < level.levelPuzzle[0].length - 1) {
-        self.availableDirections.push('R');
-      }
+    if ((self.col + 1 < level.levelPuzzle[player.matrix.row].length) && (level.levelPuzzle[self.row][self.col + 1] != 0)) {
+      self.availableDirections.push('R');
     }
-    if (level.levelPuzzle[self.row][self.col - 1] !== 0) { // left
-      if (self.col - 1 > 0 && self.col - 1 < level.levelPuzzle[0].length - 1) {
-        self.availableDirections.push('L');
-      }
+    if ((self.col - 1 >= 0) && (level.levelPuzzle[self.row][self.col - 1] != 0)) {
+      self.availableDirections.push('L');
     }
-    if (level.levelPuzzle[self.row - 1][self.col] !== 0) { // up
-      if (self.row - 1 > 0 && self.row - 1 < level.levelPuzzle.length - 1) {
-        self.availableDirections.push('U');
-      }
+    if ((self.row - 1 >= 0) && (level.levelPuzzle[self.row - 1][self.col] != 0)) {
+      self.availableDirections.push('U');
     }
-    if (level.levelPuzzle[self.row + 1][self.col] !== 0) { // down
-      if (self.row + 1 > 0 && self.row + 1 < level.levelPuzzle[0].length - 1) {
-        self.availableDirections.push('D');
-      }
+    if ((self.row + 1 < level.levelPuzzle.length) && (level.levelPuzzle[self.row + 1][self.col] != 0)) {
+      self.availableDirections.push('D');
     }
   };
   self.changeDirection = function (availableDirections) {
-    var index = Math.floor(Math.random() * 4);
-    if (availableDirections[index] !== undefined) {
-      self.nextDirection = availableDirections[index];
-    }
+    var index = Math.floor(Math.random() * availableDirections.length);
+    self.nextDirection = availableDirections[index];
   };
   self.move = function (direction) {
-    if (self.nextDirection === 'R') {
+    if (direction === 'R') {
       self.col += 1;
       self.changeCoords();
     }
-    else if (self.nextDirection === 'L') {
+    else if (direction === 'L') {
       self.col -= 1;
       self.changeCoords();
     }
-    else if (self.nextDirection === 'U') {
+    else if (direction === 'U') {
       self.row -= 1;
       self.changeCoords();
     }
-    else if (self.nextDirection === 'D') {
+    else if (direction === 'D') {
       self.row += 1;
       self.changeCoords();
     }
-    console.log(self.nextDirection);
+    else {
+      self.changeCoords();
+    }
   };
 }
