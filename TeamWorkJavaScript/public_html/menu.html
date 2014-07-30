@@ -1,4 +1,4 @@
-<div class="menu">
+﻿<div class="menu">
     ﻿<button id="start" onclick="(function () {
         $('#menu').hide();
         $('#msg').hide();
@@ -9,5 +9,11 @@
     })();">Play</button>
     <button id="story">Story</button>
     <button id="controls">How to play?</button>
-    <button id="about">About</button>
+    <button id="about"onclick="(function () {
+        $('.menu').css('width', '100%');
+        $('.menu button').css('marginRight', '10px');
+        $('.menu button').css('display', 'block');
+        $('#aboutInfo').show();
+        getAboutInfo(about);
+    })();">About</button>
 </div>

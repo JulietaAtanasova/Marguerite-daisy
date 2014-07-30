@@ -50,10 +50,6 @@ body {
         background: url("../IMG/sound-on.png") no-repeat;
         border: none;
     }
-    #countdown{
-
-    }
-
 
 /* ----------- MENU ----------- */
 @font-face {
@@ -121,4 +117,18 @@ body {
     color: #000000;
     font-family: 'Indie Flower', 'Comic Sans MS', Arial;
 }
-
+/* ----------- MESSAGE ----------- */
+#aboutInfo{
+    width: 500px;
+    height: 400px;
+    margin:  -40% 10%;
+    padding-top: 10px;
+    position: absolute;
+    display: block;
+    background-color: #5CADFF;
+    border-radius: 10px;
+    opacity: 0.5;
+    color: #000000;
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 20px;
+}

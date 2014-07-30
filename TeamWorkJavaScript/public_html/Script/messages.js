@@ -8,3 +8,14 @@ function getMessage (index){
         });
     });
 };
+
+var about = 'This game is developed from students at Software University. Developers:...';
+
+function getAboutInfo(index){
+    $(function () {
+        $.get('message.html', function (data) {
+            $('#aboutInfo').html(data);
+            $('#aboutInfo').text(index);
+        });
+    });
+};
