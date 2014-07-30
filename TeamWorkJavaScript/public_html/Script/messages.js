@@ -30,3 +30,14 @@ function getHowToPlay(index){
         });
     });
 };
+
+var gameStory = 'Pesho is a football player, but he dreams to be programmer. He wants to be student at SoftUni. Can you help him to become programmer?';
+
+function getStory(index){
+    $(function () {
+        $.get('message.html', function (data) {
+            $('#gameStory').html(data);
+            $('#gameStory').text(index);
+        });
+    });
+};

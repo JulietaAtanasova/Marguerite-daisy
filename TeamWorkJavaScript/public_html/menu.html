@@ -7,12 +7,22 @@
         startGame(1);
         timer.start();
     })();">Play</button>
-    <button id="story">Story</button>
+    <button id="story"onclick="(function () {
+        $('.menu').css('width', '100%');
+        $('.menu button').css('marginRight', '10px');
+        $('.menu button').css('display', 'block');
+        $('#gameStory').show();
+        $('#howToPlay').hide();
+        $('#aboutInfo').hide();
+        getStory(gameStory);
+    })();">Story</button>
     <button id="controls"onclick="(function () {
         $('.menu').css('width', '100%');
         $('.menu button').css('marginRight', '10px');
         $('.menu button').css('display', 'block');
-        $('#aboutInfo').show();
+        $('#howToPlay').show();
+        $('#aboutInfo').hide();
+        $('#gameStory').hide();
         getHowToPlay(howTo);
     })();">How to play?</button>
     <button id="about" onclick="(function () {
@@ -20,6 +30,9 @@
         $('.menu button').css('marginRight', '10px');
         $('.menu button').css('display', 'block');
         $('#aboutInfo').show();
+        $('#howToPlay').hide();
+        $('#gameStory').hide();
+        $('#gameStory').hide();
         getAboutInfo(about);
     })();">About</button>
 </div>

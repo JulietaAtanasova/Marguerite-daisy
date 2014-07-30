@@ -118,7 +118,7 @@ body {
     font-family: 'Indie Flower', 'Comic Sans MS', Arial;
 }
 /* ----------- MESSAGE ----------- */
-#aboutInfo, #howToPlay, #story{
+#aboutInfo, #howToPlay, #gameStory{
     width: 500px;
     height: 400px;
     margin:  -40% 10%;
