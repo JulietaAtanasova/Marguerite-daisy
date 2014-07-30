@@ -13,19 +13,13 @@
     ]
 ], player, scores = 0, level,
 levelPuzzle,
-collectibles = [],
 canvas, ctx,
-playerImgFront, playerImgBack,
-  collectIcons = [];
+playerImgFront, playerImgBack;
 
 playerImgFront = new Image();
 playerImgFront.src = "./IMG/pesho.png";
 playerImgBack = new Image();
 playerImgBack.src = "./IMG/pesho-back.png";
-
-function renderScore() {
-  $('#points').text(scores);
-}
 
 function handler(event) {
   if (event.keyCode == 39) { //right 1
@@ -62,16 +56,17 @@ function handler(event) {
       player.shoot(4);
     }
   }
-  for (var i = 0; i < collectibles.length; i += 1) {
-    var currentCollectible = collectibles[i];
+  for (var i = 0; i < level.collectibles.length; i += 1) {
+    var currentCollectible = level.collectibles[i];
     if (currentCollectible.checkIfCollected(player)) {
-      collectibles.splice(i, 1);
-      scores += 10 * level;
+      level.collectibles.splice(i, 1);
+      scores += 10 * level.level;
     }
   }
   canvasRedraw();
-  drawCollectibles();
-  renderScore();
+  level.drawCollectibles();
+  level.renderScore();
+  level.checkIfCompleted();
 }
 
 function canvasRedraw() {
@@ -79,49 +74,22 @@ function canvasRedraw() {
   ctx.drawImage(player.img, player.x, player.y);
 }
 
-function drawCollectibles() {
-  for (var i = 0; i < collectibles.length; i += 1) {
-    var currentCollectible = collectibles[i];
-    if (!currentCollectible.collected) {
-      ctx.drawImage(currentCollectible.img, currentCollectible.x, currentCollectible.y);
-    }
-  }
-}
-
-function initCollectibles() {
-  var collectSize = 4;
-  var paths = ['./IMG/cSharp.png', './IMG/eclipse.png', './IMG/html5.png', './IMG/css.png'];
-  for (i = 0; i < collectSize; i += 1) {
-    var img = new Image();
-    img.src = paths[i];
-    collectIcons.push(img);
-  }
-  for (var i = 0; i < levelPuzzle.length; i += 1) {
-    for (var j = 0; j < levelPuzzle[i].length; j += 1) {
-      if (levelPuzzle[i][j] === 2) {
-        var colCoords = new Collectible(i, j);
-        collectibles.push(colCoords);
-      }
-    }
-  }
-}
-
 function init(lvl) {
   level = lvl;
-  levelPuzzle = puzzle[level - 1];
   canvas = document.getElementById('game');
   ctx = canvas.getContext('2d');
 }
 
 function startGame(lvl) {
+  lvl = new Level(lvl,puzzle);
   scores = 0;
-  renderScore();
+  lvl.renderScore();
   init(lvl);
-  initCollectibles();
+  level.initCollectibles();
   canvas.width = canvas.width;
   player = new Player(playerImgFront, 0, 120);
   ctx.drawImage(player.img, player.x, player.y);
-  drawCollectibles();
+  level.drawCollectibles();
   document.addEventListener('keydown', handler, false);
 }
 
@@ -169,16 +137,16 @@ function Player(img, x, y) {
   self.checkNextPosition = function (direction) {
     var condition;
     if (direction == "right") {
-      condition = (player.matrix.col + 1 < puzzle[level - 1][player.matrix.row].length) && (puzzle[level - 1][player.matrix.row][player.matrix.col + 1] != 0);
+      condition = (player.matrix.col + 1 < level.levelPuzzle[player.matrix.row].length) && (level.levelPuzzle[player.matrix.row][player.matrix.col + 1] != 0);
     }
     else if (direction == "left") {
-      condition = (player.matrix.col - 1 >= 0) && (puzzle[level - 1][player.matrix.row][player.matrix.col - 1] != 0);
+      condition = (player.matrix.col - 1 >= 0) && (level.levelPuzzle[player.matrix.row][player.matrix.col - 1] != 0);
     }
     else if (direction == "up") {
-      condition = (player.matrix.row - 1 >= 0) && (puzzle[level - 1][player.matrix.row - 1][player.matrix.col] != 0);
+      condition = (player.matrix.row - 1 >= 0) && (level.levelPuzzle[player.matrix.row - 1][player.matrix.col] != 0);
     }
     else if (direction == "down") {
-      condition = (player.matrix.row + 1 < puzzle[level - 1].length) && (puzzle[level - 1][player.matrix.row + 1][player.matrix.col] != 0);
+      condition = (player.matrix.row + 1 < level.levelPuzzle.length) && (level.levelPuzzle[player.matrix.row + 1][player.matrix.col] != 0);
     }
     if (condition) {
       return true;
@@ -198,12 +166,61 @@ function Collectible(row, col) {
   self.x = (self.col) * 40;
   self.y = (self.row) * 60;
   self.collected = false;
-  self.img = collectIcons[level - 1];
+  self.img = level.collectIcons[level.level - 1];
   self.checkIfCollected = function (player) {
     if (player.matrix.row === self.row && player.matrix.col === self.col) {
       self.collected = true;
       return true;
     }
     return false;
+  };
+}
+
+function Level(lvl, puzzle) {
+  var self = this;
+  self.completed = false;
+  self.level = lvl;
+  self.levelPuzzle = puzzle[self.level - 1];
+  self.collectibles = [];
+  self.collectIcons = [];
+  self.initCollectibles = function () {
+    var collectSize = 4;
+    var paths = ['./IMG/cSharp.png', './IMG/eclipse.png', './IMG/html5.png', './IMG/css.png'];
+    for (i = 0; i < collectSize; i += 1) {
+      var img = new Image();
+      img.src = paths[i];
+      self.collectIcons.push(img);
+    }
+    for (var i = 0; i < self.levelPuzzle.length; i += 1) {
+      for (var j = 0; j < self.levelPuzzle[i].length; j += 1) {
+        if (self.levelPuzzle[i][j] === 2) {
+          var colCoords = new Collectible(i, j);
+          self.collectibles.push(colCoords);
+        }
+      }
+    }
+  };
+  self.drawCollectibles = function () {
+    for (var i = 0; i < self.collectibles.length; i += 1) {
+      var currentCollectible = self.collectibles[i];
+      if (!currentCollectible.collected) {
+        ctx.drawImage(currentCollectible.img, currentCollectible.x, currentCollectible.y);
+      }
+    }
+  };
+  self.renderScore = function () {
+    $('#points').text(scores);
+  };
+  self.checkIfCompleted = function () {
+    function prepareNextLevel () {
+      // draw arrow for next level
+      console.log('completed');
+    }
+    if(self.collectibles.length === 0) {
+      self.completed = true;
+    }
+    if (self.completed) {
+      prepareNextLevel();
+    }
   };
 }
