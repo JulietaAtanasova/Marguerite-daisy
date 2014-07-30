@@ -1,4 +1,4 @@
-function Timer(seconds) {
+﻿function Timer(seconds) {
   var self = this;
   self.paused = false;
   self.time = seconds;
@@ -8,10 +8,10 @@ function Timer(seconds) {
   var a;
   self.start = function () {
     a = setInterval(function () {
-      if(self.paused === true){
+      if (self.paused === true) {
         return;
       }
-      if(self.time > 0){
+      if (self.time > 0) {
         self.time -= 1;
         self.minutes = parseInt(self.time / 60, 10);
         self.seconds = self.time % 60;
@@ -29,11 +29,11 @@ function Timer(seconds) {
     self.time = seconds;
   }
   self.pause = function () {
-    if(self.paused === true){
+    if (self.paused === true) {
       self.paused = false;
       return;
     }
-    if(self.paused === false){
+    if (self.paused === false) {
       self.paused = true;
       return;
     }

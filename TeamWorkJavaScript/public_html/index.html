@@ -9,15 +9,16 @@
     <script src="Script/jquery.textillate.js"></script>
     <script src="Script/jquery.fittext.js"></script>
     <script src="Script/music.js"></script>
+    <script src="Script/timer.js"></script>
+    <script src="Script/game.js"></script>
     <script>
         var music = new Audio('./music/animals.mp3');
         music = new Music(music);
     </script>
-    <script src="Script/timer.js"></script>
-    <script src="Script/messages.js"></script>
     <script>
-        var timer = new Timer(90);
+        var timer = new Timer(9);
     </script>
+    <script src="Script/messages.js"></script>
 </head>
 <body>
     <div id="wrapper">
@@ -29,12 +30,13 @@
                 $('#navigation').hide();
                 $('#msg').hide();
                 timer.reset();
-                startGame();
+                startGame(1);
                 })();">Back</div>
                 
                  <div id="pause" onclick="(function () {
                 if (timer.paused === false) {
                     document.removeEventListener('keydown', handler, false);
+                    clearInterval(enemyMovement);
                     $('#msg').show();
                 }
                 else {
@@ -71,13 +73,7 @@
             $('#howToPlay').hide();
             $('#gameStory').hide();
             $('#navigation').hide();
-            $(function () {
-                //uncomment to animate text
-                // $('#text').textillate();
-            });
         </script>
     </div>
-    <script src="Script/game.js"></script>
-    <script src="Script/ball.js"></script>
 </body>
 </html>

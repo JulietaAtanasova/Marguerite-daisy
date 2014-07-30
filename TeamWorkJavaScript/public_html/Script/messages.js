@@ -28,7 +28,7 @@ function getAboutInfo(index){
     });
 };
 
-var howTo = '<h1 class="howToPlay">How To Play<h1>' + '<h2 class="collect">collect:&nbsp;&nbsp;</h2><p class="shap1"><img src="IMG/cSharp.png" />&nbsp;<img src="IMG/html5.png" />&nbsp;<img src="IMG/eclipse.png" /></p> <h2 class="avoid">avoid:</h2><p class="shap"><img src="IMG/planeta-tv.png" />&nbsp;<img src="IMG/blonde-girl.png" />&nbsp;<img src="IMG/beer.png" />&nbsp;&nbsp;&nbsp;<img src="IMG/2048.png" /></p>' + '<img class="upKeys" src="IMG/Up.jpg" alt=""/><p class="move"> - To move Pesho please tab <br/> Up, Down, left, Right</p> <p class="space"><img class="spaceImg" src="IMG/space.jpg"></p> <p class="fire"> - to fire please tab space</p>';
+var howTo = '<h1 class="howToPlay">How To Play<h1>' + '<h2 class="collect">collect:&nbsp;&nbsp;</h2><p class="shap1"><img src="IMG/cSharp.png" />&nbsp;<img src="IMG/html5.png" />&nbsp;<img src="IMG/eclipse.png" /></p> <h2 class="avoid">avoid:</h2><p class="shap"><img src="IMG/planeta-tv.png" />&nbsp;<img src="IMG/blonde-girl.png" />&nbsp;<img src="IMG/beer.png" />&nbsp;&nbsp;&nbsp;<img src="IMG/2048.png" /></p>' + '<img class="upKeys" src="IMG/Up.jpg" alt=""/><p class="move"> - To move Pesho please tab <br/> Up, Down, Left, Right</p>';
 
 function getHowToPlay(index){
     $(function () {

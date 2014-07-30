@@ -139,14 +139,17 @@ function startGame(lvl) {
   }, speed[level.level - 1]);
   var isOver = false;
   var gameOver = setInterval(function () {
-    if (isOver) {
-      // add game over screen
-      return;
-    }
     if ((level.collectiblesCount === 0 && scores < minScores[level.level - 1]) || timer.time === 0) {
       isOver = true;
       clearInterval(enemyMovement);
       document.removeEventListener('keydown', handler, false);
+      $(function () {
+        $.get('message.html', function (data) {
+          $('#msg').html("Game Over!!!");
+          $('#msg').css('font-size', '52px');
+          $('#msg').show();
+        });
+      });
     }
   }, speed[level.level - 1]);
 }
@@ -302,7 +305,7 @@ function Level(lvl, puzzle) {
       var nextLevelImg = new Image();
       nextLevelImg.src = './IMG/next-down.png';
       nextLevelImg.onload = function () {
-        
+
       }
       ctx.drawImage(nextLevelImg, level.endPoint[level.level - 1].x, level.endPoint[level.level - 1].y);
       if (player.matrix.row === 9 && player.matrix.col === 23) {
