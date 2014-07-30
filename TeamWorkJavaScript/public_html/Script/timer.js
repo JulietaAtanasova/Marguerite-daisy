@@ -16,8 +16,6 @@
         self.minutes = parseInt(self.time / 60, 10);
         self.seconds = self.time % 60;
         self.render();
-      } else {
-        return false;
       }
     }, self.INTERVAL);
   }

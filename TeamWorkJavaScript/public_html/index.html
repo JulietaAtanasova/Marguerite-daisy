@@ -16,27 +16,23 @@
         music = new Music(music);
     </script>
     <script>
-        var timer = new Timer(9);
+        var timer = new Timer(120);
     </script>
     <script src="Script/messages.js"></script>
 </head>
 <body>
     <div id="wrapper">
         <div id="menu"></div>
-            <div id="navigation">
-                <div id="back" onclick="(function () {
-                $('#menu').show();
-                $('#game').hide();
-                $('#navigation').hide();
-                $('#msg').hide();
-                timer.reset();
-                startGame(1);
-                })();">Back</div>
-                
-                 <div id="pause" onclick="(function () {
+        <div id="navigation">
+            <div id="back" onclick="
+    $('#menu').show();
+    $('#game').hide();
+    $('#navigation').hide();
+    $('#msg').hide();
+    timer.reset(); location.href = 'index.html';">Back</div>
+            <div id="pause" onclick="(function () {
                 if (timer.paused === false) {
                     document.removeEventListener('keydown', handler, false);
-                    clearInterval(enemyMovement);
                     $('#msg').show();
                 }
                 else {
@@ -44,18 +40,18 @@
                     $('#msg').hide();
                 }
                 getMessage(messages[0]);
-                $('#menu').hide();
+                //$('#menu').hide();
                 timer.pause();
-            })();">Pause                     
-                </div>
-                
-                <div id="score">Score: <span id="points">0</span></div>
-                <div id="timer">Time: <span id="countdown"></span></div>
-                <button id="music"onclick="(function () {
-                    $('#music').css('background-image', 'url(\'./IMG/sound-off.png\')');
-                })();">
-                </button>
+            })();">
+                Pause
             </div>
+
+            <div id="score">Score: <span id="points">0</span></div>
+            <div id="timer">Time: <span id="countdown"></span></div>
+            <button id="music" onclick="(function () {
+                    $('#music').css('background-image', 'url(\'./IMG/sound-off.png\')');
+                })();"></button>
+        </div>
         <div id="msg"></div>
         <div id="aboutInfo"></div>
         <div id="howToPlay"></div>

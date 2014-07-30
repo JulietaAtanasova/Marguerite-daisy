@@ -14,13 +14,13 @@
     [
         [0, 0, 0, 1, 1, 2, 1, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0],
         [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0],
-        [1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1],
+        [1, 1, 1, 3, 0, 1, 1, 3, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1],
         [0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0],
         [0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 2, 1, 1],
-        [0, 0, 1, 0, 0, 2, 1, 1, 0, 1, 1, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0, 2, 1, 1, 0, 1, 3, 1, 1, 2, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
         [2, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-        [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1],
+        [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 3, 1, 0, 0, 1],
         [0, 1, 1, 1, 1, 0, 1, 2, 1, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2]
     ],
     [
@@ -37,15 +37,14 @@
     ]
 ], player, level,
 scores = 0, minScores = [70, 80, 90],
-speed = [700, 600, 500],
+speed = [800, 700, 600],
 levelPuzzle,
 canvas, ctx,
-playerImgFront, playerImgBack;
-
-playerImgFront = new Image();
-playerImgFront.src = "./IMG/pesho.png";
-playerImgBack = new Image();
-playerImgBack.src = "./IMG/pesho-back.png";
+playerImgFront, playerImgBack,
+enemyMovement, gameOver;
+var collectPaths = [['./IMG/Img_Visual Studio1.png'], ['./IMG/eclipse.png'], ['./IMG/html5.png'], ['./IMG/css.png']];
+var enemyPaths = [['./IMG/planeta-tv.png', './IMG/blonde-girl.png', './IMG/beer.png'], ['./IMG/2048.png', './IMG/beer.png'], ['./IMG/2048.png', './IMG/beer.png', './IMG/girl2.png']];
+var playerImgs = [['./IMG/pesho.png', './IMG/pesho-back.png'], ['./IMG/pesho-level-up.png', './IMG/pesho-level-up-back.png'], ['./IMG/pesho-the-student.png', './IMG/pesho-the-student-back.png']];
 
 function handler(event) {
   if (event.keyCode == 39) { //right 1
@@ -118,8 +117,10 @@ function startGame(lvl) {
   scores = 0;
   lvl.renderScore();
   init(lvl);
-  var collectPaths = [['./IMG/Img_Visual Studio1.png'], ['./IMG/eclipse.png'], ['./IMG/html5.png'], ['./IMG/css.png']];
-  var enemyPaths = [['./IMG/planeta-tv.png', './IMG/blonde-girl.png', './IMG/beer.png'], ['./IMG/2048.png', './IMG/beer.png'], ['./IMG/2048.png', './IMG/beer.png', './IMG/girl2.png']];
+  playerImgFront = new Image();
+  playerImgFront.src = playerImgs[level.level - 1][0];
+  playerImgBack = new Image();
+  playerImgBack.src = playerImgs[level.level - 1][1];
   level.initCollectibles(collectPaths);
   level.initEnemyCollectibles(enemyPaths);
   canvas.width = canvas.width;
@@ -127,7 +128,7 @@ function startGame(lvl) {
   ctx.drawImage(player.img, player.x, player.y);
   level.drawCollectibles();
   document.addEventListener('keydown', handler, false);
-  var enemyMovement = setInterval(function () {
+  enemyMovement = setInterval(function () {
     for (var i = 0; i < level.enemiesCount; i += 1) {
       var enemy = level.collectibles[i + level.collectiblesCount]; // only enemies
       enemy.checkAvailableDirections();
@@ -138,15 +139,17 @@ function startGame(lvl) {
     }
   }, speed[level.level - 1]);
   var isOver = false;
-  var gameOver = setInterval(function () {
+  gameOver = setInterval(function () {
     if ((level.collectiblesCount === 0 && scores < minScores[level.level - 1]) || timer.time === 0) {
       isOver = true;
       clearInterval(enemyMovement);
       document.removeEventListener('keydown', handler, false);
       $(function () {
         $.get('message.html', function (data) {
-          $('#msg').html("Game Over!!!");
-          $('#msg').css('font-size', '52px');
+          $('#msg').html(
+            "<p>Game Over!!!</p>" +
+            "<button id='playagain'><a href = 'index.html'>Play Again</a></button>"
+            );
           $('#msg').show();
         });
       });
@@ -216,7 +219,7 @@ function Player(img, x, y) {
   };
   self.changeImage = function (newImg) {
     self.img = newImg;
-    self.img.onload = undefined;
+    self.img.onload = null;
   }
 }
 
@@ -228,7 +231,7 @@ function Collectible(row, col) {
   self.x = (self.col) * 40;
   self.y = (self.row) * 60;
   self.collected = false;
-  self.img = level.collectIcons[level.level - 1];
+  self.img = level.collectIcons[0];
   self.checkIfCollected = function (player) {
     if (player.matrix.row === self.row && player.matrix.col === self.col) {
       self.collected = true;
@@ -252,7 +255,6 @@ function Level(lvl, puzzle) {
   self.collectiblesCount = 0;
   self.collectObjectsCount = 0;
   self.initCollectibles = function (paths) {
-    var collectSize = paths.length;
     var img = new Image();
     img.src = paths[level.level - 1][0];
     self.collectIcons.push(img);
@@ -305,9 +307,8 @@ function Level(lvl, puzzle) {
       var nextLevelImg = new Image();
       nextLevelImg.src = './IMG/next-down.png';
       nextLevelImg.onload = function () {
-
+        ctx.drawImage(nextLevelImg, level.endPoint[level.level - 1].x, level.endPoint[level.level - 1].y);
       }
-      ctx.drawImage(nextLevelImg, level.endPoint[level.level - 1].x, level.endPoint[level.level - 1].y);
       if (player.matrix.row === 9 && player.matrix.col === 23) {
         var nextLvl = level.level + 1;
         var bgUrl = 'url(\'' + level.levelsPicPaths[level.level] + '\')';
@@ -315,6 +316,7 @@ function Level(lvl, puzzle) {
         startGame(nextLvl);
       }
     }
+    
     if (self.collectiblesCount <= 0 && self.enemiesCount > 0) {
       self.completed = true;
     }
