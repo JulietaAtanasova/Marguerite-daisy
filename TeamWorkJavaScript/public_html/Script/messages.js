@@ -25,8 +25,8 @@ var howTo = 'Some text or animation...';
 function getHowToPlay(index){
     $(function () {
         $.get('message.html', function (data) {
-            $('#aboutInfo').html(data);
-            $('#aboutInfo').text(index);
+            $('#howToPlay').html(data);
+            $('#howToPlay').text(index);
         });
     });
 };
