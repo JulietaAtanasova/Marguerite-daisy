@@ -1,6 +1,6 @@
 body {
     text-align: center;
-    background-color: palegoldenrod;
+    background-color: #262626;
     margin: 0;
     padding: 0;
 }
@@ -68,10 +68,10 @@ body {
     .menu{
         float: right;
         width: 312px;
-        height: 511px;
+        height: 579px;
         background-color: black;
-        opacity: 0.6;
-        padding-top: 89px;
+        opacity: 0.8;
+        padding-top: 21px;
         margin-top: 0px;
 }
     #start, #story, #controls, #about {
@@ -106,7 +106,16 @@ body {
         margin: 10px auto;
     }
 /* ----------- END MENU ----------- */
-
+.logo{
+    margin-bottom: 61px;
+    margin-top: 20px;
+}
+/* ----------- logo ----------- */
+.logo{
+    margin-bottom: 61px;
+    margin-top: 20px;
+}
+/* ----------- END LOGO ----------- */
 #game {
     /*position: fixed;*/
     /*background-image: url('../IMG/Backround_with_light.png'); */
