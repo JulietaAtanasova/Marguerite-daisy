@@ -23,6 +23,7 @@ body {
     font-family: 'Comic Sans MS', Arial, sans-serif;
     box-sizing: border-box;
     padding-bottom: 44px;
+    opacity: 0.8;
 }
     #score, #timer{
         display: inline-block;
@@ -178,4 +179,60 @@ body {
     color: #000000;
     font-family: Tahoma, Arial, sans-serif;
     font-size: 20px;
+}
+/* ----------- howToPlay ----------- */
+.keyImg{
+    margin-left: 86px;
+    height: 72px;
+    margin-top: -216px;
+    width: 33px;
+    height: 54px;
+    opacity: 1 !important;
+}
+.avoid{
+    font-size: 20px;
+    margin-top: 46px;
+    margin-left: 28px;
+    width: 50px;
+}
+.collect{
+    font-size: 20px;
+    margin-left: -371px;
+    margin-right: 10px;   
+    margin-top: 29px;
+}
+.howToPlay{
+    font-size: 37px;
+    font-family: 'Comic Sans MS', Arial, sans-serif;
+    font-weight: bold;
+    margin-top: 7px;
+}
+.upKeys{
+    margin-top: 109px;
+    margin-left: -276px;
+}
+.move{
+    margin-left: 215px;
+    margin-top: -70px;
+}
+.fire{
+    margin-left: 194px;
+    margin-top: -64px;
+}
+.space{
+    margin-left: -279px;
+    margin-top: -193px;
+    /* width: 118px; */
+}
+.spaceImg{
+    width: 196px;
+    height: 54px;
+}
+.shap{
+    margin-top: -56px;
+    margin-left: -120px;
+}
+.shap1{
+    margin-top: -56px;
+    margin-left: -172px;
 }
