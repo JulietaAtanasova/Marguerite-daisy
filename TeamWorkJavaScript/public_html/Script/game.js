@@ -148,7 +148,7 @@ function startGame(lvl) {
         $.get('message.html', function (data) {
           $('#msg').html(
             "<p>Game Over!!!</p>" +
-            "<button id='playagain'><a href = 'index.html'>Play Again</a></button>"
+            "<button id='playAgain'><a href = 'index.html'>Replay</a></button>"
             );
           $('#msg').show();
         });
