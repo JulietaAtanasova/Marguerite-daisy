@@ -311,15 +311,26 @@ function Level(lvl, puzzle) {
       nextLevelImg.onload = function () {
         ctx.drawImage(nextLevelImg, level.endPoint[level.level - 1].x, level.endPoint[level.level - 1].y);
       }
-      if (player.x == level.endPoint[level.level - 1].x && player.y == level.endPoint[level.level - 1].y) {
-        var nextLvl = level.level + 1;
-        var bgUrl = 'url(\'' + level.levelsPicPaths[level.level] + '\')';
-        $('#game').css('background-image', bgUrl);
-        startGame(nextLvl);
+      if (level.level === 3) {
+        $(function () {
+          $.get('message.html', function (data) {
+            $('#msg').html(
+              "<p>You Win!!!</p>" +
+              "<button id='playAgain'><a href = 'index.html'>Replay</a></button>"
+              );
+            $('#msg').show();
+          });
+        });
+        if (player.x == level.endPoint[level.level - 1].x && player.y == level.endPoint[level.level - 1].y) {
+          var nextLvl = level.level + 1;
+          var bgUrl = 'url(\'' + level.levelsPicPaths[level.level] + '\')';
+          $('#game').css('background-image', bgUrl);
+          startGame(nextLvl);
+        }
       }
     }
-    
-    if (self.collectiblesCount <= 0 && self.enemiesCount > 0) {
+
+    if (self.collectiblesCount <= 0 && self.enemiesCount >= 0) {
       self.completed = true;
     }
     if (self.completed) {
