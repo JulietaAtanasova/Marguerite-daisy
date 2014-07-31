@@ -66,6 +66,9 @@ body {
         border: none;
         color: #5CADFF;
     }
+    #music:hover{
+        cursor: pointer;
+    }
 
 /* ----------- MENU ----------- */
 @font-face {

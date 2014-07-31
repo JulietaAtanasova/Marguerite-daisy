@@ -12,11 +12,9 @@
     <script src="Script/timer.js"></script>
     <script src="Script/game.js"></script>
     <script>
-        var music = new Audio('./music/animals.mp3');
-        music = new Music(music);
-    </script>
-    <script>
         var timer = new Timer(120);
+        var audio = new Audio('./music/Game_win.mp3');
+        audio.play();
     </script>
     <script src="Script/messages.js"></script>
 </head>
@@ -48,9 +46,17 @@
 
             <div id="score">Score: <span id="points">0</span></div>
             <div id="timer">Time: <span id="countdown"></span></div>
-            <button id="music" onclick="(function () {
-                    $('#music').css('background-image', 'url(\'./IMG/sound-off.png\')');
-                })();"></button>
+            <div id="music" onclick="(function () {
+            var url = window.location.href.substr(0,40) + '/IMG/sound-on.png';
+            url = 'url(' + url + ')';
+            if ($('#music').css('background-image') == url) {
+                 $('#music').css('background-image', 'url(\'./IMG/sound-off.png\')');
+                 audio.pause();
+            } else {
+                $('#music').css('background-image', 'url(\'./IMG/sound-on.png\')');
+                audio.play();
+            }
+            })();"></div>
         </div>
         <div id="msg"></div>
         <div id="aboutInfo"></div>
