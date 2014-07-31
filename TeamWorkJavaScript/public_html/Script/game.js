@@ -310,7 +310,7 @@ function Level(lvl, puzzle) {
       nextLevelImg.src = './IMG/next-down.png';
       nextLevelImg.onload = function () {
         ctx.drawImage(nextLevelImg, level.endPoint[level.level - 1].x, level.endPoint[level.level - 1].y);
-      }
+      };
       if (level.level === 3) {
         $(function () {
           $.get('message.html', function (data) {
@@ -321,14 +321,14 @@ function Level(lvl, puzzle) {
             $('#msg').show();
           });
         });
-        if (player.x == level.endPoint[level.level - 1].x && player.y == level.endPoint[level.level - 1].y) {
+    }
+        if (player.x === level.endPoint[level.level - 1].x && player.y === level.endPoint[level.level - 1].y) {
           var nextLvl = level.level + 1;
           var bgUrl = 'url(\'' + level.levelsPicPaths[level.level] + '\')';
           $('#game').css('background-image', bgUrl);
           startGame(nextLvl);
         }
-      }
-    }
+    };
 
     if (self.collectiblesCount <= 0 && self.enemiesCount >= 0) {
       self.completed = true;
@@ -337,7 +337,6 @@ function Level(lvl, puzzle) {
       prepareNextLevel();
     }
   };
-}
 
 function Enemy(row, col) {
   var self = this;
@@ -404,4 +403,5 @@ function Enemy(row, col) {
       self.changeCoords();
     }
   };
+}
 }
