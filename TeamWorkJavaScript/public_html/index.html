@@ -47,16 +47,18 @@
             <div id="score">Score: <span id="points">0</span></div>
             <div id="timer">Time: <span id="countdown"></span></div>
             <div id="music" onclick="(function () {
-            var url = window.location.href.substr(0,40) + '/IMG/sound-on.png';
-            url = 'url(' + url + ')';
-            if ($('#music').css('background-image') == url) {
-                 $('#music').css('background-image', 'url(\'./IMG/sound-off.png\')');
-                 audio.pause();
-            } else {
-                $('#music').css('background-image', 'url(\'./IMG/sound-on.png\')');
-                audio.play();
-            }
-            })();"></div>
+             var url = window.location.href +
+             'IMG/sound-on.png'; url = 'url(' + url + ')';
+              if ($('#music').css('background-image') == url)
+              { $('#music').css('background-image', 'url(\'./IMG/sound-off.png\')');
+               audio.pause();
+              } else {
+              $('#music').css('background-image', 'url(\'./IMG/sound-on.png\')');
+              audio.play();
+              }
+              })();">
+
+            </div>
         </div>
         <div id="msg"></div>
         <div id="aboutInfo"></div>

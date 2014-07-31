@@ -247,7 +247,7 @@ function Level(lvl, puzzle) {
   self.completed = false;
   self.level = lvl;
   self.levelPoints = 0;
-  self.levelsPicPaths = ['./IMG/background_V1_2.jpg', './IMG/backgroundV2_2.jpg', './IMG/backgroundV2_3.jpg'];
+  self.levelsPicPaths = ['./IMG/background_V1_2.jpg', './IMG/background_green_and_blue.jpg', './IMG/backgroundV2_3.jpg'];
   self.endPoint = [{ x: 920, y: 540 }, { x: 960, y: 540 }, { x: 920, y: 540 }];
   self.levelPuzzle = puzzle[self.level - 1];
   self.collectibles = [];
