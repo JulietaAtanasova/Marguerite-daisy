@@ -88,10 +88,14 @@ function handler(event) {
       if (currentCollectible.behave === '+') {
         level.collectiblesCount -= 1;
         scores += 10 * level.level;
+        level.scores += 10 * level.level;
+        level.levelPoints += 10 * level.level;
       }
       else if (currentCollectible.behave === '-') {
         level.enemiesCount -= 1;
         scores -= 10 * level.level;
+        level.scores -= 10 * level.level;
+        level.levelPoints -= 10 * level.level;
       }
     }
   }
@@ -140,7 +144,7 @@ function startGame(lvl) {
   }, speed[level.level - 1]);
   var isOver = false;
   gameOver = setInterval(function () {
-    if ((level.collectiblesCount === 0 && scores < minScores[level.level - 1]) || timer.time === 0) {
+    if ((level.collectiblesCount === 0 && level.levelPoints < minScores[level.level - 1]) || timer.time === 0) {
       isOver = true;
       clearInterval(enemyMovement);
       document.removeEventListener('keydown', handler, false);
@@ -168,9 +172,6 @@ function Player(img, x, y) {
   self.y = y;
   self.matrix = { row: 2, col: 0 };
   self.direction = 0;
-  self.shoot = function (direction) {
-    // TODO
-  };
   self.move = function (x, y, direction) {
     self.x += x;
     self.y += y;
@@ -245,8 +246,9 @@ function Level(lvl, puzzle) {
   var self = this;
   self.completed = false;
   self.level = lvl;
+  self.levelPoints = 0;
   self.levelsPicPaths = ['./IMG/background_V1_2.jpg', './IMG/backgroundV2_2.jpg', './IMG/backgroundV2_3.jpg'];
-  self.endPoint = [{ x: 920, y: 540 }, { x: 920, y: 540 }, { x: 920, y: 540 }];
+  self.endPoint = [{ x: 920, y: 540 }, { x: 960, y: 540 }, { x: 920, y: 540 }];
   self.levelPuzzle = puzzle[self.level - 1];
   self.collectibles = [];
   self.collectIcons = [];
@@ -309,7 +311,7 @@ function Level(lvl, puzzle) {
       nextLevelImg.onload = function () {
         ctx.drawImage(nextLevelImg, level.endPoint[level.level - 1].x, level.endPoint[level.level - 1].y);
       }
-      if (player.matrix.row === 9 && player.matrix.col === 23) {
+      if (player.x == level.endPoint[level.level - 1].x && player.y == level.endPoint[level.level - 1].y) {
         var nextLvl = level.level + 1;
         var bgUrl = 'url(\'' + level.levelsPicPaths[level.level] + '\')';
         $('#game').css('background-image', bgUrl);
